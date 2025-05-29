@@ -154,7 +154,7 @@ const config: Config = {
         "slide-in-left": "slide-in-left 0.6s ease-out",
         "slide-in-right": "slide-in-right 0.6s ease-out",
         "scale-in": "scale-in 0.6s ease-out",
-        "gradient-x": "gradient-x 15s ease infinite",
+        "gradient-x": "gradient-x 30s ease infinite",
         "gradient-y": "gradient-y 15s ease infinite",
         "gradient-xy": "gradient-xy 15s ease infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",

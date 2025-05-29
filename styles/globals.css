@@ -2,14 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --theme-transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  transition: var(--theme-transition);
+}
+
+.theme-transition * {
+  transition: var(--theme-transition);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep functionality */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  
+  .glass-effect {
+    @apply bg-background/80 backdrop-blur-lg border border-border/50;
+  }
+
+  .hover-glass-effect {
+    @apply hover:bg-background/90 hover:backdrop-blur-lg transition-all duration-300;
+  }
+}
 }
 
 @layer base {

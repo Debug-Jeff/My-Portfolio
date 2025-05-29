@@ -54,7 +54,7 @@ export default function Navbar() {
               </motion.div>
               <div>
                 <span className="font-bold text-xl">Jeff</span>
-                <span className="text-primary font-bold text-xl">Mutugi</span>
+                <span className="text-primary font-bold text-xl"> Mutugi</span>
                 <div className="text-xs text-muted-foreground hidden sm:block">Developer & Security Specialist</div>
               </div>
             </Link>

@@ -77,4 +77,6 @@ export default function MatrixRain() {
       ref={canvasRef}
       className="matrix-rain"
       aria-hidden="true"
-    />\
+    />
+  );
+}
