@@ -26,7 +26,8 @@ INTEGRATIONS.md
 DEPLOYMENT.md
 SECURITY.md
 
-README.md
+# Markdown files
+*.md
 
 # vercel
 .vercel

@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 import {
   ChevronLeft,
   ChevronRight,
@@ -69,17 +70,21 @@ export default function Sidebar({ className = "" }: SidebarProps) {
   const filteredItems = navItems.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
-    <motion.aside
+    <motion.div
       initial={false}
-      animate={{ width: isCollapsed ? 80 : 280 }}
+      animate={{
+        width: isCollapsed ? 80 : 280
+      }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] glass-effect z-30 overflow-hidden shadow-lg ${className}`}
+      className={cn(
+        "fixed left-0 top-16 h-[calc(100vh-4rem)] glass-effect z-30 overflow-hidden shadow-lg border-r border-border/50",
+        className
+      )}
     >
       <div className="flex flex-col h-full">
         {/* Header */}
         <motion.div 
-          className="p-4 border-b border-border/50 backdrop-blur-lg"
-          initial={false}
+          className="p-4 border-b border-border/50 backdrop-blur-lg relative"
           animate={{ 
             paddingLeft: isCollapsed ? '1rem' : '1.5rem',
             paddingRight: isCollapsed ? '1rem' : '1.5rem'
@@ -102,42 +107,60 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                   <div className="font-semibold text-sm">Jeff Mutugi</div>
                   <div className="text-xs text-muted-foreground">Developer</div>
                 </div>
-              </motion.div>
-            )}
+                <AnimatePresence mode="wait">
+              {!isCollapsed && (
+                <motion.div
+                  key="profile"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center space-x-3"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="/avatar.jpg" alt="Jeff Mutugi" />
+                    <AvatarFallback>JM</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-semibold text-sm">Jeff Mutugi</div>
+                    <div className="text-xs text-muted-foreground">Developer</div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <motion.button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="h-8 w-8 p-0 rounded-full hover:bg-accent/80 transition-colors flex items-center justify-center"
+              className="h-8 w-8 p-0 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2"
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{ rotate: isCollapsed ? 0 : 180 }}
+              transition={{ duration: 0.3 }}
             >
-              <motion.div
-                initial={false}
-                animate={{ rotate: isCollapsed ? 0 : 180 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              >
-                <ChevronLeft size={16} />
-              </motion.div>
+              <ChevronLeft size={16} />
             </motion.button>
+            </motion.div>
           </div>
 
           {/* Search */}
-          {!isCollapsed && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-4"
-            >
-              <div className="relative">
+          <AnimatePresence mode="wait">
+              {!isCollapsed && (
+                <motion.div
+                  key="search"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-4 px-1"
+                >
+              <div className="relative group">
                 <Search
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground group-focus-within:text-foreground transition-colors"
                   size={14}
                 />
                 <Input
-                  placeholder="Search..."
+                  placeholder="Search navigation..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 h-8 text-sm"
+                  className="pl-9 h-8 text-sm bg-transparent focus:bg-accent/5 transition-colors border-border/50 focus:border-border"
                 />
               </div>
             </motion.div>
@@ -145,8 +168,8 @@ export default function Sidebar({ className = "" }: SidebarProps) {
         </div>
 
         {/* Navigation Items */}
-        <div className="flex-1 overflow-y-auto px-4 pb-4 pt-4">
-          <nav className="space-y-1">
+        <div className="flex-1 overflow-y-auto py-4">
+          <nav className="space-y-1 px-3">
             {filteredItems.map((item, index) => {
               const Icon = item.icon
               const isActive = pathname === item.path
@@ -162,8 +185,8 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                     href={item.path}
                     className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${
                       isActive
-                        ? "bg-primary/10 text-primary border border-primary/20"
-                        : "hover:bg-accent text-foreground/80 hover:text-foreground"
+                        ? "bg-primary/10 text-primary border border-primary/20 shadow-sm"
+                        : "hover:bg-accent/50 text-foreground/80 hover:text-foreground hover:shadow-sm"
                     }`}
                     title={isCollapsed ? item.name : undefined}
                   >
@@ -250,6 +273,6 @@ export default function Sidebar({ className = "" }: SidebarProps) {
           )}
         </div>
       </div>
-    </motion.aside>
+    </motion.div>
   )
 }
