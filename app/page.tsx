@@ -190,15 +190,16 @@ function CyberGrid() {
 }
 
 export default function CoverPage() {
-  const [showContent, setShowContent] = useState(false)
-  const [fadeOut, setFadeOut] = useState(false)
-  const [currentPhase, setCurrentPhase] = useState(0)
-  const router = useRouter()
+  const router = useRouter();
+  const [showContent, setShowContent] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
   
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 })
-  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -233,8 +234,8 @@ export default function CoverPage() {
   return (
     <AnimatePresence>
       <motion.div
-        className="h-screen w-full relative overflow-hidden bg-black"
-        initial={{ opacity: 1 }}
+        className="fixed inset-0 overflow-hidden bg-black"
+        initial={{ opacity: 0 }}
         animate={{ opacity: fadeOut ? 0 : 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5 }}

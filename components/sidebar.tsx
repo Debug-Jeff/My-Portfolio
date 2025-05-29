@@ -73,11 +73,19 @@ export default function Sidebar({ className = "" }: SidebarProps) {
       initial={false}
       animate={{ width: isCollapsed ? 80 : 280 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-md border-r border-border/50 z-30 overflow-hidden ${className}`}
+      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] glass-effect z-30 overflow-hidden shadow-lg ${className}`}
     >
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="p-4 border-b border-border/50">
+        <motion.div 
+          className="p-4 border-b border-border/50 backdrop-blur-lg"
+          initial={false}
+          animate={{ 
+            paddingLeft: isCollapsed ? '1rem' : '1.5rem',
+            paddingRight: isCollapsed ? '1rem' : '1.5rem'
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
           <div className="flex items-center justify-between">
             {!isCollapsed && (
               <motion.div
@@ -96,9 +104,20 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                 </div>
               </motion.div>
             )}
-            <Button variant="ghost" size="sm" onClick={() => setIsCollapsed(!isCollapsed)} className="h-8 w-8 p-0">
-              {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </Button>
+            <motion.button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="h-8 w-8 p-0 rounded-full hover:bg-accent/80 transition-colors flex items-center justify-center"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.div
+                initial={false}
+                animate={{ rotate: isCollapsed ? 0 : 180 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <ChevronLeft size={16} />
+              </motion.div>
+            </motion.button>
           </div>
 
           {/* Search */}
