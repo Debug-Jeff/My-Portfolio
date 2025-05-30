@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
+
 import { cn } from "@/lib/utils"
 import {
   ChevronLeft,
@@ -70,34 +70,34 @@ export default function Sidebar({ className = "" }: SidebarProps) {
   const filteredItems = navItems.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
-    <motion.div
-      initial={false}
-      animate={{
-        width: isCollapsed ? 80 : 280
-      }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+    <div
       className={cn(
         "fixed left-0 top-16 h-[calc(100vh-4rem)] glass-effect z-30 overflow-hidden shadow-lg border-r border-border/50",
         className
       )}
+      style={{
+        width: isCollapsed ? 80 : 280,
+        transition: 'width 0.3s ease-in-out'
+      }}
     >
       <div className="flex flex-col h-full">
         {/* Header */}
-        <motion.div 
+        <div 
           className="p-4 border-b border-border/50 backdrop-blur-lg relative"
-          animate={{ 
+          style={{ 
             paddingLeft: isCollapsed ? '1rem' : '1.5rem',
-            paddingRight: isCollapsed ? '1rem' : '1.5rem'
+            paddingRight: isCollapsed ? '1rem' : '1.5rem',
+            transition: 'padding 0.3s ease-in-out'
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <div className="flex items-center justify-between">
             {!isCollapsed && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+              <div
                 className="flex items-center space-x-3"
+                style={{
+                  opacity: isCollapsed ? 0 : 1,
+                  transition: 'opacity 0.3s ease-in-out'
+                }}
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/avatar.jpg" alt="Jeff Mutugi" />
@@ -107,49 +107,29 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                   <div className="font-semibold text-sm">Jeff Mutugi</div>
                   <div className="text-xs text-muted-foreground">Developer</div>
                 </div>
-                <AnimatePresence mode="wait">
-              {!isCollapsed && (
-                <motion.div
-                  key="profile"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex items-center space-x-3"
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/avatar.jpg" alt="Jeff Mutugi" />
-                    <AvatarFallback>JM</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <div className="font-semibold text-sm">Jeff Mutugi</div>
-                    <div className="text-xs text-muted-foreground">Developer</div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <motion.button
+
+            <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="h-8 w-8 p-0 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              animate={{ rotate: isCollapsed ? 0 : 180 }}
-              transition={{ duration: 0.3 }}
+              className="h-8 w-8 p-0 rounded-full hover:bg-accent hover:text-accent-foreground transition-all flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2"
+              style={{
+                transform: `rotate(${isCollapsed ? 0 : 180}deg)`,
+                transition: 'transform 0.3s ease-in-out'
+              }}
             >
               <ChevronLeft size={16} />
-            </motion.button>
-            </motion.div>
+            </button>
+            </div>
           </div>
 
           {/* Search */}
-          <AnimatePresence mode="wait">
-              {!isCollapsed && (
-                <motion.div
-                  key="search"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
+          {!isCollapsed && (
+                <div
                   className="mt-4 px-1"
+                  style={{
+                    opacity: isCollapsed ? 0 : 1,
+                    transform: `translateY(${isCollapsed ? -10 : 0}px)`,
+                    transition: 'opacity 0.2s ease-in-out, transform 0.2s ease-in-out'
+                  }}
                 >
               <div className="relative group">
                 <Search
@@ -163,7 +143,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                   className="pl-9 h-8 text-sm bg-transparent focus:bg-accent/5 transition-colors border-border/50 focus:border-border"
                 />
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
 
@@ -175,11 +155,14 @@ export default function Sidebar({ className = "" }: SidebarProps) {
               const isActive = pathname === item.path
 
               return (
-                <motion.div
+                <div
                   key={item.path}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  className="transform transition-all duration-300"
+                  style={{
+                    opacity: 1,
+                    transform: 'translateX(0)',
+                    transitionDelay: `${index * 0.05}s`
+                  }}
                 >
                   <Link
                     href={item.path}
@@ -210,21 +193,19 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                     )}
 
                     {isActive && (
-                      <motion.div
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full"
-                        layoutId="sidebar-indicator"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      <div
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full transition-all duration-300"
                       />
                     )}
                   </Link>
-                </motion.div>
+                </div>
               )
             })}
           </nav>
 
           {/* Quick Actions */}
           {!isCollapsed && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-8">
+            <div className="mt-8 transition-opacity duration-300" style={{ opacity: 1, transitionDelay: '0.3s' }}>
               <Separator className="mb-4" />
               <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 Quick Actions
@@ -244,7 +225,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
                   )
                 })}
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
 
@@ -273,6 +254,6 @@ export default function Sidebar({ className = "" }: SidebarProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
