@@ -119,10 +119,10 @@ export default function ProjectsPage() {
       id: 8,
       title: "Portfolio Website",
       description: "Personal portfolio website showcasing projects and skills.",
-      image: "/image-1.jpg?height=400&width=600",
+      image: "/my-portfolio.png?height=400&width=600",
       stack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
       github: "https://github.com/Debug-Jeff/My-Portfolio",
-      demo: "https://jeffmutugi.vercel.app",
+      demo: "https://the-odessy-portfolio.netlify.app/",
       details:
         "A personal portfolio website built with Next.js, TypeScript, Tailwind CSS, and Framer Motion. The website showcases my projects, skills, and experience in an interactive and visually appealing way.",
     },

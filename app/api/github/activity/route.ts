@@ -17,7 +17,7 @@ const githubActivity = {
       stars: 45,
       forks: 12,
       updated: "2024-01-15T10:30:00Z",
-      url: "https://github.com/jeffmutugi/portfolio-website",
+      url: "https://github.com/Debug-Jeff/My-Portfolio",
     },
     {
       name: "security-toolkit",
