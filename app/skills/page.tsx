@@ -69,6 +69,58 @@ export default function SkillsPage() {
     { name: "Notion", icon: "notion", level: 88 },
   ]
 
+  // Skill icons mapping with colors
+  const skillIcons = {
+    // Languages
+    "Python": { icon: "🐍", color: "from-yellow-400 to-blue-500" },
+    "JavaScript": { icon: "🟨", color: "from-yellow-400 to-yellow-600" },
+    "TypeScript": { icon: "🔷", color: "from-blue-400 to-blue-600" },
+    "HTML": { icon: "🌐", color: "from-orange-400 to-red-500" },
+    "CSS": { icon: "🎨", color: "from-blue-400 to-purple-500" },
+    
+    // Frameworks
+    "React": { icon: "⚛️", color: "from-cyan-400 to-blue-500" },
+    "Next.js": { icon: "▲", color: "from-gray-800 to-black" },
+    "Django": { icon: "🐍", color: "from-green-600 to-green-800" },
+    "Express.js": { icon: "🚀", color: "from-gray-600 to-gray-800" },
+    "Tailwind CSS": { icon: "💨", color: "from-cyan-400 to-teal-500" },
+    
+    // Tools
+    "Figma": { icon: "📐", color: "from-purple-400 to-pink-500" },
+    "GitHub": { icon: "🐙", color: "from-gray-700 to-black" },
+    "VS Code": { icon: "💻", color: "from-blue-500 to-blue-700" },
+    "WordPress": { icon: "📝", color: "from-blue-600 to-gray-700" },
+    "Docker": { icon: "🐳", color: "from-blue-400 to-cyan-500" },
+    "Linux": { icon: "🐧", color: "from-yellow-400 to-orange-500" },
+    
+    // Databases
+    "MongoDB": { icon: "🍃", color: "from-green-500 to-green-700" },
+    "MySQL": { icon: "🗄️", color: "from-orange-400 to-blue-600" },
+    "PostgreSQL": { icon: "🐘", color: "from-blue-600 to-indigo-600" },
+    "REST APIs": { icon: "🔗", color: "from-green-400 to-blue-500" },
+    "GraphQL": { icon: "🌐", color: "from-pink-500 to-purple-600" },
+    
+    // Security
+    "Kali Linux": { icon: "🔓", color: "from-black to-red-600" },
+    "Nmap": { icon: "🔍", color: "from-blue-500 to-purple-600" },
+    "Metasploit": { icon: "💥", color: "from-red-500 to-red-700" },
+    "Burp Suite": { icon: "🔧", color: "from-orange-500 to-red-500" },
+    "Wireshark": { icon: "🦈", color: "from-blue-400 to-cyan-500" },
+    "OWASP ZAP": { icon: "⚡", color: "from-yellow-400 to-orange-500" },
+    "Nessus": { icon: "🛡️", color: "from-green-500 to-teal-600" },
+    "Aircrack-ng": { icon: "📡", color: "from-purple-500 to-indigo-600" },
+    "John the Ripper": { icon: "🗝️", color: "from-gray-600 to-gray-800" },
+    "Hashcat": { icon: "🔐", color: "from-red-400 to-pink-600" },
+    
+    // Collaboration
+    "Git": { icon: "🌿", color: "from-orange-500 to-red-500" },
+    "GitLab": { icon: "🦊", color: "from-orange-400 to-purple-500" },
+    "Bitbucket": { icon: "🪣", color: "from-blue-500 to-blue-700" },
+    "Jira": { icon: "📋", color: "from-blue-600 to-indigo-600" },
+    "Slack": { icon: "💬", color: "from-purple-500 to-pink-500" },
+    "Notion": { icon: "📓", color: "from-gray-700 to-black" }
+  }
+
   // Combine all skills for tickers
   const allSkills = [...languages, ...frameworks, ...tools, ...databases, ...security, ...collaboration]
 
@@ -161,16 +213,16 @@ export default function SkillsPage() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <main className="flex-grow container mx-auto py-20 px-4 relative">
         {/* Floating Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-xl animate-pulse"></div>
           <div className="absolute top-40 right-20 w-40 h-40 bg-gradient-to-r from-pink-400/10 to-orange-400/10 rounded-full blur-xl animate-pulse delay-1000"></div>
           <div className="absolute bottom-40 left-1/4 w-28 h-28 bg-gradient-to-r from-green-400/10 to-teal-400/10 rounded-full blur-xl animate-pulse delay-2000"></div>
-        </div>
+        </div> */}
 
         {/* Hero Section */}
         <motion.div 
@@ -216,14 +268,14 @@ export default function SkillsPage() {
         </motion.div>
 
         {/* Top Ticker */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mb-16"
         >
           <SkillTicker skills={allSkills} direction="left" />
-        </motion.div>
+        </motion.div> */}
 
         {/* Skills Sections */}
         <motion.div
@@ -290,9 +342,11 @@ export default function SkillsPage() {
                       <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50 dark:border-gray-700/50 hover:shadow-2xl transition-all duration-300">
                         {/* Skill Icon/Name */}
                         <div className="text-center mb-3">
-                          <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-xl flex items-center justify-center text-2xl font-bold text-gray-700 dark:text-gray-300 group-hover:scale-110 transition-transform duration-300">
-                            {skill.name.charAt(0)}
-                          </div>
+                          <div className={`w-12 h-12 mx-auto mb-2 bg-gradient-to-br ${skillIcons[skill.name]?.color || 'from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600'} rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <span className="filter drop-shadow-sm">
+                          {skillIcons[skill.name]?.icon || skill.name.charAt(0)}
+                          </span>
+                        </div>
                           <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                             {skill.name}
                           </h3>
@@ -329,14 +383,14 @@ export default function SkillsPage() {
         </motion.div>
 
         {/* Bottom Ticker */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
           className="mt-16"
         >
           <SkillTicker skills={allSkills} direction="right" />
-        </motion.div>
+        </motion.div> */}
       </main>
 
       <Footer />

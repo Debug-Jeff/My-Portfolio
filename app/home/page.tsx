@@ -3,32 +3,9 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ThemeToggle } from "@/components/theme-toggle"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-
-export default function HomePage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar />
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <section className="mb-12">
-          <EnhancedAnimatedCode />
-        </section>
-        
-        <section className="relative">
-          <FloatingParticles />
-          {/* Add your other home page content here */}
-        </section>
-      </main>
-      
-      <Footer />
-    </div>
-  )
-}
+import Link from "next/link"
+// import Navbar from "@/components/navbar"
+// import Footer from "@/components/footer"
 
 // Enhanced Animated Terminal Component
 const EnhancedAnimatedCode = () => {
@@ -123,24 +100,45 @@ const EnhancedAnimatedCode = () => {
 
 // Floating Particles Background
 const FloatingParticles = () => {
-  const particles = Array.from({ length: 30 }, (_, i) => i)
+  const [particles, setParticles] = useState([])
+
+  useEffect(() => {
+    // Ensure we're on the client side and window is available
+    if (typeof window !== 'undefined') {
+      const newParticles = Array.from({ length: 30 }, (_, i) => {
+        const size = Math.random() * 4 + 1
+        return {
+          id: i,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          size: size,
+          duration: Math.random() * 20 + 10,
+        }
+      })
+      setParticles(newParticles)
+    }
+  }, [])
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((particle) => (
         <motion.div
-          key={particle}
-          className="absolute w-1 h-1 bg-blue-500/30 rounded-full"
+          key={particle.id}
+          className="absolute rounded-full bg-blue-500/30"
+          style={{
+            width: particle.size,
+            height: particle.size,
+          }}
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: particle.x,
+            y: particle.y,
           }}
           animate={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : particle.x,
+            y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : particle.y,
           }}
           transition={{
-            duration: Math.random() * 20 + 10,
+            duration: particle.duration,
             repeat: Infinity,
             ease: "linear"
           }}
@@ -175,7 +173,10 @@ const MatrixRain = () => {
           className="absolute text-green-400 font-mono text-xs"
           style={{ left: `${drop.x}%` }}
           initial={{ y: -100, opacity: 0 }}
-          animate={{ y: window.innerHeight + 100, opacity: [0, 1, 0] }}
+          animate={{ 
+            y: typeof window !== 'undefined' ? window.innerHeight + 100 : 800, 
+            opacity: [0, 1, 0] 
+          }}
           transition={{
             duration: 8,
             repeat: Infinity,
@@ -243,7 +244,7 @@ const Footer = () => (
   </motion.footer>
 )
 
-export default function HomePage() {
+export function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -256,6 +257,23 @@ export default function HomePage() {
       <FloatingParticles />
       <MatrixRain />
       
+      {/* Ghost Profile Image */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10 blur-sm"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.1 }}
+          transition={{ duration: 2, delay: 1 }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center overflow-hidden">
+            {/* Here you would replace this with your actual image */}
+            <div className="w-full h-full bg-gradient-to-br from-gray-600/50 to-gray-800/50 rounded-full flex items-center justify-center">
+              <div className="text-[400px] opacity-60"></div>
+            </div>
+          </div>
+        </motion.div>
+      </div> 
+      
       {/* Gradient Overlays */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
@@ -265,61 +283,10 @@ export default function HomePage() {
       <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
           
-          {/* Left Side - Profile Image */}
-          <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
-            animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* Placeholder for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
-                </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
+          {/* Left Side - Main Content */}
           <motion.div
             className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
+            initial={{ x: -100, opacity: 0 }}
             animate={isVisible ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
@@ -349,6 +316,7 @@ export default function HomePage() {
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
+                style={{ backgroundSize: "200% 200%" }}
               >
                 Jeff Mutugi
               </motion.span>
@@ -368,12 +336,14 @@ export default function HomePage() {
             </motion.p>
 
             {/* Action Buttons */}
+
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4 }}
             >
+              <Link href="/projects">
               <motion.button
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -382,7 +352,8 @@ export default function HomePage() {
                 <span className="relative z-10">View My Projects</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
-              
+              </Link>
+              <Link href="/contact">
               <motion.button
                 className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -390,284 +361,68 @@ export default function HomePage() {
               >
                 Contact Me
               </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
-        </div>
 
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-
-export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <FloatingParticles />
-      <MatrixRain />
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-      <Navbar />
-
-      <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
-          
-          {/* Left Side - Profile Image */}
+          {/* Right Side - Terminal */}
           <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
+            className="w-full lg:w-2/5 flex justify-center lg:justify-end"
+            initial={{ x: 100, opacity: 0, scale: 0.8 }}
             animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* image-1.jpg for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
+            <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 w-full max-w-lg relative overflow-hidden">
+              {/* Terminal Header */}
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
+                <div className="flex gap-2">
+                  <motion.div 
+                    className="w-3 h-3 rounded-full bg-red-500"
+                    whileHover={{ scale: 1.2 }}
+                  ></motion.div>
+                  <motion.div 
+                    className="w-3 h-3 rounded-full bg-yellow-500"
+                    whileHover={{ scale: 1.2 }}
+                  ></motion.div>
+                  <motion.div 
+                    className="w-3 h-3 rounded-full bg-green-500"
+                    whileHover={{ scale: 1.2 }}
+                  ></motion.div>
                 </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <div className="ml-4 text-sm text-gray-400 font-mono">
+                  jeff@cybersec:~/portfolio $
+                </div>
+                <div className="ml-auto">
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-green-400"
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  ></motion.div>
+                </div>
               </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
+
+              {/* Terminal Content */}
+              <div className="min-h-[300px] relative">
+                <EnhancedAnimatedCode />
+                
+                {/* Scan Lines Effect */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <motion.div
+                    className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
+                    animate={{ y: [0, 300, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  ></motion.div>
+                </div>
+              </div>
+
+              {/* Terminal Footer */}
+              <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
+                <span>◉ Live Session</span>
+                <span>🔒 Secure Connection</span>
+              </div>
             </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
-          <motion.div
-            className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
-            animate={isVisible ? { x: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Greeting */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mb-6"
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-medium border border-blue-400/30 backdrop-blur-sm">
-                👋 Welcome to my digital realm
-              </span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              Hello, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-                animate={{ 
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Jeff Mutugi
-              </motion.span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              A passionate{" "}
-              <span className="text-blue-400 font-semibold">developer</span> and{" "}
-              <span className="text-purple-400 font-semibold">cybersecurity specialist</span>{" "}
-              crafting secure, interactive digital experiences that protect and delight users.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-              
-              <motion.button
-                className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
           </motion.div>
         </div>
-
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
       </main>
 
       <Footer />
@@ -675,868 +430,6 @@ export default function HomePage() {
   )
 }
 
-export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <FloatingParticles />
-      <MatrixRain />
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-      <Navbar />
-
-      <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
-          
-          {/* Left Side - Profile Image */}
-          <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
-            animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* Placeholder for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
-                </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
-          <motion.div
-            className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
-            animate={isVisible ? { x: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Greeting */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mb-6"
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-medium border border-blue-400/30 backdrop-blur-sm">
-                👋 Welcome to my digital realm
-              </span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              Hello, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-                animate={{ 
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Jeff Mutugi
-              </motion.span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              A passionate{" "}
-              <span className="text-blue-400 font-semibold">developer</span> and{" "}
-              <span className="text-purple-400 font-semibold">cybersecurity specialist</span>{" "}
-              crafting secure, interactive digital experiences that protect and delight users.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-              
-              <motion.button
-                className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  )
+export default function Home() {
+  return <HomePage />
 }
-
-export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <FloatingParticles />
-      <MatrixRain />
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-      <Navbar />
-
-      <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
-          
-          {/* Left Side - Profile Image */}
-          <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
-            animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* Placeholder for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
-                </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
-          <motion.div
-            className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
-            animate={isVisible ? { x: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Greeting */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mb-6"
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-medium border border-blue-400/30 backdrop-blur-sm">
-                👋 Welcome to my digital realm
-              </span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              Hello, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-                animate={{ 
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Jeff Mutugi
-              </motion.span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              A passionate{" "}
-              <span className="text-blue-400 font-semibold">developer</span> and{" "}
-              <span className="text-purple-400 font-semibold">cybersecurity specialist</span>{" "}
-              crafting secure, interactive digital experiences that protect and delight users.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-              
-              <motion.button
-                className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-
-export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <FloatingParticles />
-      <MatrixRain />
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-      <Navbar />
-
-      <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
-          
-          {/* Left Side - Profile Image */}
-          <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
-            animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* Placeholder for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
-                </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
-          <motion.div
-            className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
-            animate={isVisible ? { x: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Greeting */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mb-6"
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-medium border border-blue-400/30 backdrop-blur-sm">
-                👋 Welcome to my digital realm
-              </span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              Hello, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-                animate={{ 
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Jeff Mutugi
-              </motion.span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              A passionate{" "}
-              <span className="text-blue-400 font-semibold">developer</span> and{" "}
-              <span className="text-purple-400 font-semibold">cybersecurity specialist</span>{" "}
-              crafting secure, interactive digital experiences that protect and delight users.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-              
-              <motion.button
-                className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-
-export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <FloatingParticles />
-      <MatrixRain />
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-      <Navbar />
-
-      <main className="relative z-10 flex-grow container mx-auto py-24 px-4 mt-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[calc(100vh-200px)]">
-          
-          {/* Left Side - Profile Image */}
-          <motion.div
-            className="w-full lg:w-2/5 flex justify-center lg:justify-start"
-            initial={{ x: -100, opacity: 0, scale: 0.8 }}
-            animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <div className="relative">
-              {/* Glowing Ring Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6)",
-                  padding: "4px"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-full h-full rounded-full bg-gray-900"></div>
-              </motion.div>
-              
-              {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm">
-                {/* Placeholder for actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                  <div className="text-8xl">👨‍💻</div>
-                </div>
-                
-                {/* Overlay Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              </div>
-              
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/20 rounded-full backdrop-blur-sm border border-blue-400/30 flex items-center justify-center"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm border border-purple-400/30 flex items-center justify-center"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              >
-                ⚡
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Main Content */}
-          <motion.div
-            className="w-full lg:w-3/5 text-center lg:text-left"
-            initial={{ x: 100, opacity: 0 }}
-            animate={isVisible ? { x: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Greeting */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mb-6"
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm font-medium border border-blue-400/30 backdrop-blur-sm">
-                👋 Welcome to my digital realm
-              </span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              Hello, I'm{" "}
-              <motion.span
-                className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-                animate={{ 
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                Jeff Mutugi
-              </motion.span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-            >
-              A passionate{" "}
-              <span className="text-blue-400 font-semibold">developer</span> and{" "}
-              <span className="text-purple-400 font-semibold">cybersecurity specialist</span>{" "}
-              crafting secure, interactive digital experiences that protect and delight users.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 }}
-            >
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-              
-              <motion.button
-                className="px-8 py-4 border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced Terminal Section */}
-        <motion.div
-          className="mt-16 lg:mt-24"
-          initial={{ y: 10 0, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 max-w-4xl mx-auto relative overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
-              <div className="flex gap-2">
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-red-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-yellow-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-                <motion.div 
-                  className="w-3 h-3 rounded-full bg-green-500"
-                  whileHover={{ scale: 1.2 }}
-                ></motion.div>
-              </div>
-              <div className="ml-4 text-sm text-gray-400 font-mono">
-                jeff@cybersec:~/portfolio $
-              </div>
-              <div className="ml-auto">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Content */}
-            <div className="min-h-[300px] relative">
-              <EnhancedAnimatedCode />
-              
-              {/* Scan Lines Effect */}
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div
-                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
-                  animate={{ y: [0, 300, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                ></motion.div>
-              </div>
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
-              <span>◉ Live Session</span>
-              <span>🔒 Secure Connection</span>
-              <span>⚡ Ready for Input</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  )
-}
-
-export default function

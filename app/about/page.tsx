@@ -5,8 +5,8 @@ import { useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import Image from "next/image"
-import { Timeline, TimelineItem } from "@/components/timeline"
-import AchievementsTimeline from "@/components/achievements-timeline"
+import Link from "next/link"
+import { Shield, Code, Users, Award } from "lucide-react"
 
 export default function AboutPage() {
   const [isVisible, setIsVisible] = useState(false)
@@ -15,148 +15,179 @@ export default function AboutPage() {
     setIsVisible(true)
   }, [])
 
-  const quickFacts = [
-    { label: "Age", value: "20" },
-    { label: "Nationality", value: "Kenyan" },
-    { label: "Location", value: "Nairobi, Kenya" },
+  const highlights = [
+    {
+      icon: Shield,
+      title: "Cybersecurity Focus",
+      value: "Offensive Security & Ethical Hacking"
+    },
+    {
+      icon: Code,
+      title: "Development Experience",
+      value: "Full-Stack Web Development"
+    },
+    {
+      icon: Award,
+      title: "Recent Achievement",
+      value: "NASA Space Apps Winner 2024"
+    },
+    {
+      icon: Users,
+      title: "Leadership",
+      value: "Tech Club Official"
+    }
+  ]
+
+  const professionalFacts = [
+    { label: "Focus Area", value: "Cybersecurity & Development" },
+    { label: "Education", value: "Computer Science Student" },
     { label: "Languages", value: "English, Swahili" },
-    { label: "Interests", value: "Gaming, Reading, Hiking, Cycling" },
-    { label: "Education", value: "Computer Science" },
+    { label: "Specialization", value: "Penetration Testing" }
   ]
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-grow container mx-auto py-16 px-4">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold mb-12 text-center"
+      <main className="flex-grow container mx-auto py-20 px-4">
+        <motion.div
+          className="text-center mb-16"
           initial={{ y: -50, opacity: 0 }}
           animate={isVisible ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
         >
-          About Me
-        </motion.h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">About Me</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Cybersecurity enthusiast and full-stack developer specializing in offensive security, 
+            with proven experience in building innovative solutions and winning hackathons.
+          </p>
+        </motion.div>
 
-        <div className="flex flex-col md:flex-row gap-12 items-center md:items-start">
+        <div className="flex flex-col lg:flex-row gap-16 items-center lg:items-start mb-20">
           <motion.div
-            className="w-full md:w-1/3 flex justify-center"
+            className="w-full lg:w-1/3 flex justify-center"
             initial={{ x: -100, opacity: 0 }}
             animate={isVisible ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80">
-              <svg
-                className="absolute w-full h-full text-primary animate-[spin_20s_linear_infinite]"
-                viewBox="0 0 100 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M50 0C77.6142 0 100 22.3858 100 50C100 77.6142 77.6142 100 50 100C22.3858 100 0 77.6142 0 50C0 22.3858 22.3858 0 50 0ZM50 10C27.9086 10 10 27.9086 10 50C10 72.0914 27.9086 90 50 90C72.0914 90 90 72.0914 90 50C90 27.9086 72.0914 10 50 10Z"
-                  fill="currentColor"
-                  fillOpacity="0.2"
-                />
-                <circle cx="50" cy="10" r="8" fill="currentColor" />
-              </svg>
-              <div className="absolute inset-4 rounded-full overflow-hidden">
-                <Image src="/image-1.jpg?height=300&width=300" alt="Jeff Mutugi" fill className="object-cover" />
+            <div className="relative">
+              {/* Modern hexagonal frame */}
+              <div className="relative w-72 h-72">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 transform rotate-90 rounded-3xl"></div>
+                <div className="absolute inset-2 bg-gradient-to-br from-background to-muted rounded-2xl transform rotate-90 shadow-2xl"></div>
+                <div className="absolute inset-4 rounded-xl overflow-hidden transform rotate-90">
+                  <div className="w-full h-full transform -rotate-90 scale-110">
+                    <Image 
+                      src="/jeff-image-1.jpg?height=300&width=300" 
+                      alt="Jeff Mutugi - Cybersecurity Professional" 
+                      width={300}
+                      height={300}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            className="w-full md:w-2/3"
+            className="w-full lg:w-2/3 space-y-8"
             initial={{ x: 100, opacity: 0 }}
             animate={isVisible ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <p>
-                I'm Jeff Mutugi, a 20-year-old Computer Science student at Africa Nazarene University (2024–2027),
-                currently specializing in Cybersecurity with a strong inclination toward Offensive Security and ethical
-                hacking. My educational journey began at The Pinnacle School (2009–2019), followed by Murang'a High
-                School (2020–2023), where I cultivated my analytical mindset and deep curiosity for technology. Today, I
-                combine my academic grounding with hands-on experience in both cybersecurity and full-stack web
-                development. Proficient in Python, JavaScript, and database languages, I've worked with modern
-                technologies such as React, Next.js, Tailwind CSS, Django, and Express.js.
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Professional Overview</h2>
+              <p className="text-lg leading-relaxed text-muted-foreground mb-6">
+                Computer Science student at Africa Nazarene University with a strong focus on cybersecurity 
+                and full-stack development. Winner of the 2024 NASA Space Apps Hackathon (Kenya) for developing 
+                an innovative space orrery system.
               </p>
-              <p>
-                I've built and contributed to diverse projects—including a Health Management System, an eCommerce web
-                app, a web-based Pomodoro timer, a dynamic game (Robot-Factory), and a network scanner (Ghost Net)
-                inspired by Nmap. Notably, I co-developed a space orrery system for tracking orbital objects, which won
-                the 2024 NASA Space Apps Hackathon (Kenya edition), and a telemedicine app that connects doctors with
-                patients in remote areas.
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                Experienced in penetration testing, CTF competitions, and building production-ready applications 
+                using modern technologies including React, Next.js, Python, and Django. Active contributor to 
+                tech communities and official at university's Cyberene tech club.
               </p>
-              <p>
-                Beyond development, I'm deeply involved in cybersecurity practice—penetrating vulnerable machines,
-                competing in national CTFs, and actively learning advanced red teaming techniques. I also serve as an
-                official in my university's tech club (Cyberene), and am an engaged member of multiple tech communities
-                both nationally and globally. In addition to technical competencies, I bring strong problem-solving
-                skills, a collaborative mindset, leadership experience, adaptability, and excellent communication
-                skills—honed through team projects, mentorship, and public presentations.
-              </p>
-              <p>
-                I've worked as an IT technician with hands-on networking experience, explored emerging tools like
-                Copilot Studio for building custom AI assistants, and frequently contribute to both learning and
-                teaching in areas such as JavaScript frameworks and cybersecurity basics. Outside the tech sphere, I'm a
-                passionate gamer, an avid reader, a hiking and cycling enthusiast, and a curious mind always eager to
-                learn something new. I envision a future as a professional penetration tester and security researcher,
-                continuously innovating at the intersection of secure systems and human-centered design.
-              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Core Expertise</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {highlights.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-center space-x-3 p-4 rounded-lg bg-card border"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <item.icon className="w-6 h-6 text-primary" />
+                    <div>
+                      <p className="font-medium">{item.title}</p>
+                      <p className="text-sm text-muted-foreground">{item.value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
 
         <motion.div
-          className="mt-16"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
           initial={{ y: 50, opacity: 0 }}
           animate={isVisible ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Education Timeline</h2>
-
-          <Timeline>
-            <TimelineItem
-              title="Africa Nazarene University"
-              date="2024 - 2027"
-              description="Computer Science, specializing in Cybersecurity"
-            />
-            <TimelineItem title="Murang'a High School" date="2020 - 2023" description="Secondary Education" />
-            <TimelineItem title="The Pinnacle School" date="2009 - 2019" description="Primary Education" />
-          </Timeline>
+          {professionalFacts.map((fact, index) => (
+            <motion.div
+              key={index}
+              className="bg-card border rounded-lg p-6 text-center shadow-sm"
+              whileHover={{ 
+                scale: 1.05, 
+                boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.15)" 
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+                {fact.label}
+              </h3>
+              <p className="text-lg font-semibold">{fact.value}</p>
+            </motion.div>
+          ))}
         </motion.div>
 
         <motion.div
-          className="mt-16"
+          className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 text-center"
           initial={{ y: 50, opacity: 0 }}
           animate={isVisible ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Quick Facts</h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {quickFacts.map((fact, index) => (
-              <motion.div
-                key={index}
-                className="bg-card border rounded-lg p-4 text-center shadow-sm"
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-                transition={{ duration: 0.2 }}
+          <h2 className="text-2xl font-bold mb-4">Ready to Collaborate?</h2>
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Whether you're looking for cybersecurity expertise, full-stack development, 
+            or innovative problem-solving, I'm always open to discussing new opportunities 
+            and challenging projects.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/projects">
+              <motion.button
+                className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <h3 className="text-lg font-medium text-muted-foreground mb-2">{fact.label}</h3>
-                <p className="text-xl font-semibold">{fact.value}</p>
-              </motion.div>
-            ))}
+                View My Projects
+              </motion.button>
+            </Link>
+            <Link href="/contact">
+              <motion.button
+                className="px-8 py-3 border border-primary text-primary rounded-lg font-medium w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get In Touch
+              </motion.button>
+            </Link>
           </div>
-        </motion.div>
-
-        <motion.div
-          className="mt-16"
-          initial={{ y: 50, opacity: 0 }}
-          animate={isVisible ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.0 }}
-        >
-          <AchievementsTimeline />
         </motion.div>
       </main>
 

@@ -108,8 +108,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Suspense fallback={null}>
-            <AnalyticsProvider />
-            <PWAProvider />
           </Suspense>
 
           <Suspense fallback={null}>

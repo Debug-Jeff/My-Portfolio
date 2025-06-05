@@ -43,31 +43,30 @@ export default function ProjectsPage() {
       id: 1,
       title: "Care-pulse",
       description: "A comprehensive health management system for hospitals and clinics.",
-      image: "/image-1.jpg?height=400&width=600",
-      stack: ["React", "Node.js", "MongoDB", "Express"],
-      github: "https://github.com/jeffmutugi/care-pulse",
+      image: "/carepulse.jpg?height=400&width=600",
+      stack: ["React", "Node.js", "PostGres", "Express"],
+      github: "https://github.com/Debug-Jeff/v0-carepulse",
       demo: "https://care-pulse.vercel.app",
       details:
         "Care-pulse is a comprehensive health management system designed to streamline hospital operations, patient management, and medical record keeping. The system includes features for appointment scheduling, patient records, billing, and inventory management.",
     },
     {
       id: 2,
-      title: "FinanceMe",
-      description: "E-commerce platform with integrated payment processing and inventory management.",
-      image: "/image-1.jpg?height=400&width=600",
-      stack: ["Next.js", "TypeScript", "Stripe", "Prisma"],
-      github: "https://github.com/jeffmutugi/finance-me",
-      demo: "https://finance-me.vercel.app",
-      details:
-        "FinanceMe is a full-featured e-commerce platform that allows businesses to sell products online. It includes features for product management, shopping cart, secure checkout with Stripe, order tracking, and inventory management.",
+      title: "HopeBites",
+      description: "Nutritional e-commerce platform specializing in fortified children's snacks with health tracking and subscription services.",
+      image: "/hope-bites.png?height=400&width=600",
+      stack: ["React", "Node.js", "MongoDB", "Stripe", "Chart.js"],
+      github: "https://github.com/hopebites/hopebites-platform",
+      demo: "https://hopebites.com",
+      details: "HopeBites is a specialized e-commerce platform focused on providing nutritious snacks for children's healthy development. The platform features age-appropriate product filtering, nutritional tracking dashboards for parents, subscription-based delivery services, and educational content about child nutrition. It includes advanced features like personalized nutrition recommendations, growth tracking integration, pediatric nutritionist consultations, and a rewards program that encourages healthy eating habits in children."
     },
     {
       id: 3,
       title: "Pomodoro Web Timer",
       description: "Productivity tool implementing the Pomodoro technique with customizable settings.",
-      image: "/image-1.jpg?height=400&width=600",
+      image: "/pomodoro.jpg?height=400&width=600",
       stack: ["React", "CSS", "LocalStorage API"],
-      github: "https://github.com/jeffmutugi/pomodoro-timer",
+      github: "https://github.com/Debug-Jeff/pomodoro",
       demo: "https://pomodoro-timer-jeff.vercel.app",
       details:
         "A web-based Pomodoro timer application that helps users improve productivity by breaking work into intervals, traditionally 25 minutes in length, separated by short breaks. Features include customizable work/break durations, sound notifications, and task tracking.",
@@ -78,7 +77,7 @@ export default function ProjectsPage() {
       description: "Interactive browser-based game where players build and battle robots.",
       image: "/image-1.jpg?height=400&width=600",
       stack: ["JavaScript", "HTML Canvas", "CSS"],
-      github: "https://github.com/jeffmutugi/robot-factory",
+      github: "https://github.com/Debug-Jeff/robot-factory",
       demo: "https://robot-factory-game.vercel.app",
       details:
         "Robot Factory is a browser-based game where players can design, build, and battle robots. The game features a component-based robot building system, various battle arenas, and a progression system.",
@@ -87,9 +86,9 @@ export default function ProjectsPage() {
       id: 5,
       title: "Ghost Net",
       description: "Network scanning tool inspired by Nmap with visualization capabilities.",
-      image: "/image-1.jpg?height=400&width=600",
+      image: "/ghost-net.png?height=400&width=600",
       stack: ["Python", "Scapy", "Flask", "D3.js"],
-      github: "https://github.com/jeffmutugi/ghost-net",
+      github: "https://github.com/Debug-Jeff/GhostNet",
       demo: null,
       details:
         "Ghost Net is a network scanning tool inspired by Nmap. It provides network discovery, port scanning, service detection, and vulnerability assessment capabilities. The tool includes a web interface with network visualization using D3.js.",
@@ -98,10 +97,10 @@ export default function ProjectsPage() {
       id: 6,
       title: "Space Orrery",
       description: "NASA Hackathon winning project for tracking orbital objects in space.",
-      image: "/image-1.jpg?height=400&width=600",
+      image: "/orrery-web-app.png?height=400&width=600",
       stack: ["Three.js", "React", "NASA API", "Node.js"],
       github: "https://github.com/jeffmutugi/space-orrery",
-      demo: "https://space-orrery.vercel.app",
+      demo: "https://spaceapp-self.vercel.app/",
       details:
         "Space Orrery is a 3D visualization system for tracking orbital objects in space. The project won the 2024 NASA Space Apps Hackathon (Kenya edition). It uses NASA's open data to visualize satellites, space debris, and other objects in Earth's orbit.",
     },
@@ -122,7 +121,7 @@ export default function ProjectsPage() {
       description: "Personal portfolio website showcasing projects and skills.",
       image: "/image-1.jpg?height=400&width=600",
       stack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      github: "https://github.com/jeffmutugi/portfolio",
+      github: "https://github.com/Debug-Jeff/My-Portfolio",
       demo: "https://jeffmutugi.vercel.app",
       details:
         "A personal portfolio website built with Next.js, TypeScript, Tailwind CSS, and Framer Motion. The website showcases my projects, skills, and experience in an interactive and visually appealing way.",
@@ -131,10 +130,10 @@ export default function ProjectsPage() {
       id: 9,
       title: "Weather Dashboard",
       description: "Real-time weather information with forecasting and historical data.",
-      image: "/image-1.jpg?height=400&width=600",
-      stack: ["React", "OpenWeather API", "Chart.js", "Tailwind CSS"],
-      github: "https://github.com/jeffmutugi/weather-dashboard",
-      demo: "https://weather-dashboard-jeff.vercel.app",
+      image: "/weather-dashboard-2.png?height=400&width=600",
+      stack: ["Nextjs", "OpenWeather API", "Chart.js", "Tailwind CSS"],
+      github: "https://github.com/Debug-Jeff/weather-dashboard",
+      demo: "https://weather-dashboard-tau-lemon.vercel.app/",
       details:
         "A weather dashboard that provides real-time weather information, forecasting, and historical data. The application uses the OpenWeather API to fetch weather data and Chart.js to visualize temperature, humidity, and precipitation trends.",
     },
@@ -154,7 +153,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 pt-20 pb-8">
         <div className="flex flex-col items-center justify-center space-y-4 mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">
             <TypewriterEffect text="My Projects" />

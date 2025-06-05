@@ -90,7 +90,7 @@ export default function CommandPalette() {
       action: () => {
         // Create a dummy resume download
         const link = document.createElement("a")
-        link.href = "/resume-jeff-mutugi.pdf"
+        link.href = "/not-yet-nuclear.pdf"
         link.download = "Jeff-Mutugi-Resume.pdf"
         link.click()
       },
@@ -105,15 +105,6 @@ export default function CommandPalette() {
       action: () => setTheme(theme === "dark" ? "light" : "dark"),
       keywords: ["theme", "dark", "light", "mode"],
       category: "Settings",
-    },
-    {
-      id: "admin",
-      title: "Admin Dashboard",
-      description: "Access admin panel (password required)",
-      icon: <Shield size={16} />,
-      action: () => router.push("/admin"),
-      keywords: ["admin", "dashboard", "manage"],
-      category: "Navigation",
     },
     {
       id: "request-project",
