@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { memo } from "react"
 import Image from "next/image"
 import { ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -22,17 +22,23 @@ interface ProjectCardProps {
   viewMode: "grid" | "list"
 }
 
-export default function ProjectCard({ project, onClick, viewMode }: ProjectCardProps) {
+function ProjectCard({ project, onClick, viewMode }: ProjectCardProps) {
   if (viewMode === "list") {
     return (
-      <motion.div
-        className="bg-card border rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        whileHover={{ scale: 1.02 }}
+      <div
+        className="bg-card border rounded-lg shadow-sm overflow-hidden cursor-pointer transform transition-transform hover:scale-102"
         onClick={onClick}
       >
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3 relative h-48 md:h-auto">
-            <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+            <Image
+              src={project.image || "/image-1.jpg"}
+              alt={project.title}
+              fill
+              className="object-cover"
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
           </div>
           <div className="md:w-2/3 p-6">
             <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
@@ -46,14 +52,24 @@ export default function ProjectCard({ project, onClick, viewMode }: ProjectCardP
             </div>
             <div className="flex gap-2">
               <Button size="sm" variant="outline" asChild>
-                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                <a 
+                  href={project.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <Github size={16} className="mr-1" />
                   Code
                 </a>
               </Button>
               {project.demo && (
                 <Button size="sm" asChild>
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                  <a 
+                    href={project.demo} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <ExternalLink size={16} className="mr-1" />
                     Demo
                   </a>
@@ -62,22 +78,23 @@ export default function ProjectCard({ project, onClick, viewMode }: ProjectCardP
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     )
   }
 
   return (
-    <motion.div
-      className="bg-card border rounded-lg shadow-sm overflow-hidden cursor-pointer group"
-      whileHover={{ scale: 1.05 }}
+    <div
+      className="bg-card border rounded-lg shadow-sm overflow-hidden cursor-pointer group transform transition-transform hover:scale-105"
       onClick={onClick}
     >
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={project.image || "/placeholder.svg"}
+          src={project.image || "/image-1.jpg"}
           alt={project.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <div className="p-4">
@@ -97,21 +114,33 @@ export default function ProjectCard({ project, onClick, viewMode }: ProjectCardP
         </div>
         <div className="flex gap-2">
           <Button size="sm" variant="outline" asChild>
-            <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <Github size={14} className="mr-1" />
+            <a 
+              href={project.github} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Github size={16} className="mr-1" />
               Code
             </a>
           </Button>
           {project.demo && (
             <Button size="sm" asChild>
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                <ExternalLink size={14} className="mr-1" />
+              <a 
+                href={project.demo} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink size={16} className="mr-1" />
                 Demo
               </a>
             </Button>
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
+
+export default memo(ProjectCard)

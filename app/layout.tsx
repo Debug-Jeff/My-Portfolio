@@ -1,22 +1,26 @@
+// "use client"
+
 import type React from "react"
 import type { Metadata, Viewport } from "next/types"
 import { Inter } from "next/font/google"
+import dynamic from "next/dynamic"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
-import CustomCursor from "@/components/custom-cursor"
-import CommandPalette from "@/components/command-palette"
-import LoadingScreen from "@/components/loading-screen"
-import NotificationSystem from "@/components/notification-system"
-import EasterEggs from "@/components/easter-eggs"
-import AnalyticsProvider from "@/components/analytics-provider"
-import PWAProvider from "@/components/pwa-provider"
 import { Suspense } from "react"
-import HackThePortfolio from "@/components/hack-the-portfolio"
-import InteractiveBackground from "@/components/interactive-background"
-import DashboardLayout from "@/components/dashboard-layout"
 
-const inter = Inter({ subsets: ["latin"] })
+// Dynamically import non-critical components
+const CustomCursor = dynamic(() => import("@/components/custom-cursor"))
+const CommandPalette = dynamic(() => import("@/components/command-palette"))
+const NotificationSystem = dynamic(() => import("@/components/notification-system"))
+const EasterEggs = dynamic(() => import("@/components/easter-eggs"))
+const AnalyticsProvider = dynamic(() => import("@/components/analytics-provider"))
+const PWAProvider = dynamic(() => import("@/components/pwa-provider"))
+const HackThePortfolio = dynamic(() => import("@/components/hack-the-portfolio"))
+const InteractiveBackground = dynamic(() => import("@/components/interactive-background"))
+const LoadingScreen = dynamic(() => import("@/components/loading-screen"))
+
+const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jeffmutugi.vercel.app"),
@@ -100,52 +104,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Jeff Mutugi",
-              url: "https://jeffmutugi.vercel.app",
-              image: "https://jeffmutugi.vercel.app/og-image.png",
-              jobTitle: "Full-stack Developer & Cybersecurity Specialist",
-              worksFor: {
-                "@type": "Organization",
-                name: "Freelance",
-              },
-              alumniOf: {
-                "@type": "Organization",
-                name: "Africa Nazarene University",
-              },
-              knowsAbout: ["Cybersecurity", "Web Development", "Ethical Hacking", "React", "Next.js", "Python"],
-              sameAs: [
-                "https://github.com/jeffmutugi",
-                "https://linkedin.com/in/jeffmutugi",
-                "https://twitter.com/jeffmutugi",
-              ],
-            }),
-          }}
-        />
-      </head>
-      <body className={`${inter.className} cursor-none`}>
+      <head />
+      <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <AnalyticsProvider>
-            <PWAProvider>
-              <LoadingScreen />
-              <CustomCursor />
-              <CommandPalette />
-              <NotificationSystem />
-              <EasterEggs />
-              <Suspense fallback={<div>Loading...</div>}>
-                <DashboardLayout>{children}</DashboardLayout>
-              </Suspense>
-              <InteractiveBackground />
-              <HackThePortfolio />
-              <Toaster />
-            </PWAProvider>
-          </AnalyticsProvider>
+          <Suspense fallback={null}>
+            <AnalyticsProvider />
+            <PWAProvider />
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <NotificationSystem />
+            <CommandPalette />
+            <Toaster />
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <CustomCursor />
+            <InteractiveBackground />
+            <EasterEggs />
+            <HackThePortfolio />
+          </Suspense>
+
+          <Suspense fallback={<LoadingScreen />}>
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

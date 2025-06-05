@@ -1,73 +1,50 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { z } from "zod"
-import { neon } from "@neondatabase/serverless"
-import { rateLimit, rateLimitConfigs } from "@/lib/rate-limit"
+import rateLimit from "@/lib/rate-limit"
 
-const sql = neon(process.env.DATABASE_URL!)
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+const limiter = rateLimit({
+  interval: 60000, // 60 seconds
+  uniqueTokenPerInterval: 500,
 })
 
-export async function POST(request: NextRequest) {
-  // Apply rate limiting
-  const rateLimitResult = await rateLimit(request, rateLimitConfigs.contact)
+// Contact form schema
+const contactSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.string().email(),
+  subject: z.string().min(2).max(200),
+  message: z.string().min(10).max(1000),
+})
 
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Too many requests. Please try again later.",
-        retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000),
-      },
-      {
-        status: 429,
-        headers: {
-          "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
-          "X-RateLimit-Reset": rateLimitResult.reset.toString(),
-        },
-      },
-    )
-  }
-
-  // Rest of the existing POST logic...
+export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const validatedData = contactSchema.parse(body)
 
-    // Get client info
-    const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown"
-    const userAgent = request.headers.get("user-agent") || "unknown"
-
-    // Insert into database
-    const result = await sql`
-      INSERT INTO contact_messages (name, email, subject, message, ip_address, user_agent)
-      VALUES (${validatedData.name}, ${validatedData.email}, ${validatedData.subject}, ${validatedData.message}, ${ip}, ${userAgent})
-      RETURNING id, created_at
-    `
-
-    // Track analytics event
-    await sql`
-      INSERT INTO analytics_events (event_type, page_path, ip_address, user_agent, metadata)
-      VALUES ('contact_form_submission', '/contact', ${ip}, ${userAgent}, ${JSON.stringify({ subject: validatedData.subject })})
-    `
-
-    return NextResponse.json({
-      success: true,
-      message: "Message sent successfully!",
-      id: result[0].id,
-    })
-  } catch (error) {
-    console.error("Contact form error:", error)
-
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ success: false, errors: error.errors }, { status: 400 })
+    // Validate input
+    const result = contactSchema.safeParse(body)
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: result.error.issues },
+        { status: 400 }
+      )
     }
 
-    return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 })
+    // Rate limiting
+    const ip = request.headers.get("x-forwarded-for") || "anonymous"
+    const rateLimited = await limiter.check(request, 5, `contact_${ip}`)
+    if (rateLimited.status === 429) {
+      return rateLimited
+    }
+
+    // Process contact form (e.g., send email, store in database)
+    // Add your implementation here
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error("Contact form error:", error)
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }
 

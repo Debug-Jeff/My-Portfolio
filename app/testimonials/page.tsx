@@ -18,7 +18,7 @@ export default function TestimonialsPage() {
       id: 1,
       name: "Sarah Johnson",
       role: "Project Manager at TechCorp",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/image-1.jpg?height=100&width=100",
       quote:
         "Jeff's work on our health management system was exceptional. His attention to security details while maintaining a user-friendly interface impressed our entire team.",
     },
@@ -26,7 +26,7 @@ export default function TestimonialsPage() {
       id: 2,
       name: "Michael Chen",
       role: "CTO at StartupX",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/image-1.jpg?height=100&width=100",
       quote:
         "Working with Jeff on our e-commerce platform was a pleasure. His technical skills combined with his understanding of security vulnerabilities made him an invaluable asset to our project.",
     },
@@ -34,7 +34,7 @@ export default function TestimonialsPage() {
       id: 3,
       name: "Emily Rodriguez",
       role: "Lead Developer at WebSolutions",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/image-1.jpg?height=100&width=100",
       quote:
         "Jeff's contributions to our team were outstanding. His ability to identify and fix security issues while implementing new features helped us deliver a robust product on time.",
     },
@@ -42,7 +42,7 @@ export default function TestimonialsPage() {
       id: 4,
       name: "David Kimani",
       role: "Hackathon Judge",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/image-1.jpg?height=100&width=100",
       quote:
         "The Space Orrery project Jeff co-developed was truly innovative. Their approach to visualizing orbital data was creative and technically impressive, worthy of the first place award.",
     },
@@ -50,7 +50,7 @@ export default function TestimonialsPage() {
       id: 5,
       name: "Lisa Wanjiku",
       role: "University Professor",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/image-1.jpg?height=100&width=100",
       quote:
         "Jeff is one of the most dedicated students I've had the pleasure of teaching. His passion for cybersecurity and his willingness to help others make him stand out among his peers.",
     },

@@ -60,7 +60,7 @@ export default function AboutPage() {
                 <circle cx="50" cy="10" r="8" fill="currentColor" />
               </svg>
               <div className="absolute inset-4 rounded-full overflow-hidden">
-                <Image src="/placeholder.svg?height=300&width=300" alt="Jeff Mutugi" fill className="object-cover" />
+                <Image src="/image-1.jpg?height=300&width=300" alt="Jeff Mutugi" fill className="object-cover" />
               </div>
             </div>
           </motion.div>

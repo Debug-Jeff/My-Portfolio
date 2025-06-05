@@ -49,7 +49,7 @@ export default function TestimonialSlider({ testimonials }: TestimonialSliderPro
             <div className="flex justify-center mb-6">
               <div className="relative w-20 h-20 rounded-full overflow-hidden">
                 <Image
-                  src={testimonials[currentIndex].avatar || "/placeholder.svg"}
+                  src={testimonials[currentIndex].avatar || "/image-1.jpg"}
                   alt={testimonials[currentIndex].name}
                   fill
                   className="object-cover"

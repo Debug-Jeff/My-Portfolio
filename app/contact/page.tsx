@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,22 +28,24 @@ type FormValues = z.infer<typeof formSchema>
 // EmailJS configuration
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "your_service_id"
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "your_template_id"
+const EMAILJS_AUTOREPLY_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID || "your_autoreply_template_id"
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "your_public_key"
 
 export default function ContactPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  \
-  const [submitStatus, setSubmitStatus<'idle' | 'success' | 'error'>('idle'
-  )
-
-  const { useEffect } = require("react")
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     setIsVisible(true)
-
-    // Initialize EmailJS
-    emailjs.init(EMAILJS_PUBLIC_KEY)
+    
+    // Initialize EmailJS with public key
+    if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "your_public_key") {
+      emailjs.init(EMAILJS_PUBLIC_KEY)
+      console.log("EmailJS initialized successfully")
+    } else {
+      console.error("EmailJS Public Key is missing or not configured")
+    }
   }, [])
 
   const form = useForm<FormValues>({
@@ -56,40 +58,132 @@ export default function ContactPage() {
     },
   })
 
+  // Enhanced onSubmit function with auto-reply functionality
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true)
     setSubmitStatus("idle")
 
     try {
-      // Prepare template parameters for EmailJS
-      const templateParams = {
+      // Debug: Log environment variables (remove in production)
+      console.log("Environment check:", {
+        serviceId: EMAILJS_SERVICE_ID,
+        templateId: EMAILJS_TEMPLATE_ID,
+        autoReplyTemplateId: EMAILJS_AUTOREPLY_TEMPLATE_ID,
+        publicKey: EMAILJS_PUBLIC_KEY?.substring(0, 5) + "...",
+      })
+
+      // Validate environment variables before sending
+      if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === "your_service_id") {
+        throw new Error("EmailJS Service ID is not configured")
+      }
+      if (!EMAILJS_TEMPLATE_ID || EMAILJS_TEMPLATE_ID === "your_template_id") {
+        throw new Error("EmailJS Template ID is not configured")
+      }
+      if (!EMAILJS_AUTOREPLY_TEMPLATE_ID || EMAILJS_AUTOREPLY_TEMPLATE_ID === "your_autoreply_template_id") {
+        throw new Error("EmailJS Auto-Reply Template ID is not configured")
+      }
+      if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === "your_public_key") {
+        throw new Error("EmailJS Public Key is not configured")
+      }
+
+      // Template parameters for the main contact email (to you)
+      const contactTemplateParams = {
+        to_email: "jmutugi00.0@gmail.com",
         from_name: data.name,
         from_email: data.email,
         subject: data.subject,
         message: data.message,
         to_name: "Jeff Mutugi",
         reply_to: data.email,
+        // Additional parameters that might be useful
+        name: data.name,
+        sender_name: data.name,
+        sender_email: data.email,
+        received_date: new Date().toLocaleString('en-US', {
+          timeZone: 'Africa/Nairobi',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
       }
 
-      // Send email using EmailJS
-      const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-
-      if (response.status === 200) {
-        setSubmitStatus("success")
-        toast({
-          title: "Message sent successfully! ✅",
-          description: "Thank you for your message. I'll get back to you within 24 hours.",
-        })
-        form.reset()
-      } else {
-        throw new Error("Failed to send message")
+      // Template parameters for the auto-reply email (to user)
+      const autoReplyTemplateParams = {
+        to_email: data.email,           // User's email (where auto-reply goes)
+        from_name: "Jeff Mutugi",       // Your name (appears as sender)
+        from_email: "jmutugi00.0@gmail.com", // Your email (appears as sender)
+        to_email: data.email,           // Reply-to field (user's email)
+        sender_name: data.name,         // User's name for personalization
+        original_subject: data.subject, // Original subject for reference
+        user_name: data.name,           // Alternative variable name
       }
-    } catch (error) {
-      console.error("EmailJS Error:", error)
+
+      console.log("Sending main contact email...")
+      console.log("Contact template parameters:", contactTemplateParams)
+
+      // Send the main contact email to you
+      const contactResponse = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        contactTemplateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+
+      console.log("Contact Email Response:", contactResponse)
+
+      if (contactResponse.status !== 200) {
+        throw new Error(`Failed to send contact email: ${contactResponse.status}`)
+      }
+
+      console.log("Sending auto-reply email...")
+      console.log("Auto-reply template parameters:", autoReplyTemplateParams)
+
+      // Send the auto-reply email to the user
+      const autoReplyResponse = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_AUTOREPLY_TEMPLATE_ID,
+        autoReplyTemplateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+
+      console.log("Auto-Reply Email Response:", autoReplyResponse)
+
+      if (autoReplyResponse.status !== 200) {
+        console.warn("Auto-reply failed, but main email was sent successfully")
+      }
+
+      setSubmitStatus("success")
+      toast({
+        title: "Message sent successfully! ✅",
+        description: "Thank you for your message. You should receive a confirmation email shortly, and I'll get back to you within 24 hours.",
+      })
+      form.reset()
+
+    } catch (error: any) {
+      console.error("Full EmailJS Error:", error)
+      console.error("Error message:", error.message)
+      console.error("Error status:", error.status)
+      console.error("Error text:", error.text)
+      
+      let errorMessage = "There was an error sending your message."
+      
+      // Handle specific error cases
+      if (error.message?.includes("not configured")) {
+        errorMessage = "Email service is not properly configured. Please check environment variables."
+      } else if (error.status === 422) {
+        errorMessage = "Invalid email template or missing required fields."
+      } else if (error.status === 400) {
+        errorMessage = "Bad request. Please check your EmailJS configuration."
+      } else if (error.text) {
+        errorMessage = `EmailJS Error: ${error.text}`
+      }
+      
       setSubmitStatus("error")
       toast({
         title: "Failed to send message ❌",
-        description: "There was an error sending your message. Please try again or contact me directly via email.",
+        description: `${errorMessage} Please try again or contact me directly via email.`,
         variant: "destructive",
       })
     } finally {
@@ -101,7 +195,7 @@ export default function ContactPage() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-grow container mx-auto py-16 px-4">
+      <main className="flex-grow container mx-auto py-24 px-4">
         <motion.h1
           className="text-4xl md:text-5xl font-bold mb-12 text-center"
           initial={{ y: -50, opacity: 0 }}
@@ -227,7 +321,7 @@ export default function ContactPage() {
                   <div className="flex items-center">
                     <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
                     <p className="text-green-800 dark:text-green-200 text-sm">
-                      Your message has been sent successfully! I'll respond within 24 hours.
+                      Your message has been sent successfully! You should receive a confirmation email shortly.
                     </p>
                   </div>
                 </motion.div>
@@ -242,7 +336,7 @@ export default function ContactPage() {
                   <div className="flex items-center">
                     <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mr-2" />
                     <p className="text-red-800 dark:text-red-200 text-sm">
-                      Failed to send message. Please try again or contact me directly at jeff.mutugi@example.com
+                      Failed to send message. Please try again or contact me directly at jmutugi00.0@gmail.com
                     </p>
                   </div>
                 </motion.div>
@@ -276,8 +370,8 @@ export default function ContactPage() {
                   <div className="space-y-3">
                     <div className="flex items-center">
                       <span className="text-sm text-muted-foreground w-16">Email:</span>
-                      <a href="mailto:jeff.mutugi@example.com" className="text-primary hover:underline">
-                        jeff.mutugi@example.com
+                      <a href="mailto:jmutugi00.0@gmail.com" className="text-primary hover:underline">
+                        jmutugi00.0@gmail.com
                       </a>
                     </div>
                     <div className="flex items-center">
@@ -299,16 +393,6 @@ export default function ContactPage() {
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">What I Can Help With</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Web Development (React, Next.js, Full-stack)</li>
-                    <li>• Cybersecurity Consulting & Penetration Testing</li>
-                    <li>• Code Reviews & Security Audits</li>
-                    <li>• Technical Mentoring & Collaboration</li>
-                    <li>• Speaking Engagements & Workshops</li>
-                  </ul>
-                </div>
               </div>
             </div>
           </motion.div>

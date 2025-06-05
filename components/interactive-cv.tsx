@@ -72,11 +72,11 @@ export default function InteractiveCV() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-blue-500" />
-              <span>jeff.mutugi@example.com</span>
+              <span>jmutugi00.0@gmail.com</span>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-green-500" />
-              <span>+254 700 123 456</span>
+              <span>+254 114 150 522</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-red-500" />

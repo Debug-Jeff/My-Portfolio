@@ -1,31 +1,31 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Linkedin, Twitter, MessageCircle } from "lucide-react"
+import { Github, Linkedin, Twitter, MessageCircle, Bot } from "lucide-react"
 
 const socialLinks = [
   {
     name: "GitHub",
-    url: "https://github.com/jeffmutugi",
+    url: "https://github.com/Debug-Jeff/",
     icon: Github,
     color: "#333",
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/jeffmutugi",
+    url: "https://www.linkedin.com/in/jeff-m-7a2123305/",
     icon: Linkedin,
     color: "#0077B5",
   },
   {
     name: "Twitter",
-    url: "https://twitter.com/jeffmutugi",
+    url: "https://x.com/Debug_Jeff",
     icon: Twitter,
     color: "#1DA1F2",
   },
   {
     name: "Discord",
     url: "https://discord.com/users/jeffmutugi",
-    icon: MessageCircle,
+    icon: Bot,
     color: "#5865F2",
   },
 ]
