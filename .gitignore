@@ -19,13 +19,6 @@ yarn-error.log*
 # env files
 .env*
 
-# Local developer files
-UI_CUSTOMIZATION.md
-DEVELOPER_GUIDE.md
-INTEGRATIONS.md
-DEPLOYMENT.md
-SECURITY.md
-
 # Markdown files
 *.md
 
