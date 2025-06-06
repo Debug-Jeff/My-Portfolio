@@ -379,8 +379,8 @@ export default function ContactPage() {
                       <span>Nairobi, Kenya</span>
                     </div>
                     <div className="flex items-center">
-                      <span className="text-sm text-muted-foreground w-16">Timezone:</span>
-                      <span>EAT (UTC+3)</span>
+                      <span className="text-sm text-muted-foreground w-16">Contact:</span>
+                      <span>+254 114150522</span>
                     </div>
                   </div>
                 </div>
