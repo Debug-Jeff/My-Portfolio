@@ -41,7 +41,7 @@ export default function NotificationSystem() {
         type: "info",
         title: "Welcome!",
         message: "Press Cmd+K to open the command palette",
-        duration: 8000,
+        duration: 3000,
       })
     }, 3000)
 

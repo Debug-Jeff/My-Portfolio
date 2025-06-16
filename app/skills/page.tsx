@@ -1,396 +1,242 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import SkillBox from "@/components/skill-box"
-import SkillTicker from "@/components/skill-ticker"
 
 export default function SkillsPage() {
   const [isVisible, setIsVisible] = useState(false)
+  const fullStackCarouselRef = useRef(null)
+  const cyberCarouselRef = useRef(null)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
-  const languages = [
-    { name: "Python", icon: "python", level: 90 },
-    { name: "JavaScript", icon: "javascript", level: 95 },
-    { name: "TypeScript", icon: "typescript", level: 85 },
-    { name: "HTML", icon: "html", level: 98 },
-    { name: "CSS", icon: "css", level: 92 },
+  // Full-Stack Technologies
+  const fullStackTech = [
+    { name: "React", icon: "⚛️", color: "#61DAFB" },
+    { name: "Next.js", icon: "▲", color: "#000000" },
+    { name: "JavaScript", icon: "JS", color: "#F7DF1E" },
+    { name: "TypeScript", icon: "TS", color: "#3178C6" },
+    { name: "Python", icon: "🐍", color: "#3776AB" },
+    { name: "Node.js", icon: "⬢", color: "#339933" },
+    { name: "Express", icon: "🚀", color: "#000000" },
+    { name: "Django", icon: "🎸", color: "#092E20" },
+    { name: "MongoDB", icon: "🍃", color: "#47A248" },
+    { name: "PostgreSQL", icon: "🐘", color: "#336791" },
+    { name: "MySQL", icon: "🗄️", color: "#4479A1" },
+    { name: "Docker", icon: "🐳", color: "#2496ED" },
+    { name: "Git", icon: "🌿", color: "#F05032" },
+    { name: "Tailwind", icon: "💨", color: "#06B6D4" },
+    { name: "HTML5", icon: "🌐", color: "#E34F26" },
+    { name: "CSS3", icon: "🎨", color: "#1572B6" }
   ]
 
-  const frameworks = [
-    { name: "React", icon: "react", level: 95 },
-    { name: "Next.js", icon: "nextjs", level: 88 },
-    { name: "Django", icon: "django", level: 80 },
-    { name: "Express.js", icon: "express", level: 85 },
-    { name: "Tailwind CSS", icon: "tailwind", level: 90 },
+  // Cybersecurity Tools
+  const cyberSecTech = [
+    { name: "Kali Linux", icon: "🔓", color: "#557C94" },
+    { name: "Metasploit", icon: "💥", color: "#2596BE" },
+    { name: "Burp Suite", icon: "🔧", color: "#FF6633" },
+    { name: "Nmap", icon: "🔍", color: "#0E4B99" },
+    { name: "Wireshark", icon: "🦈", color: "#1679A7" },
+    { name: "OWASP ZAP", icon: "⚡", color: "#00549E" },
+    { name: "Nessus", icon: "🛡️", color: "#00C176" },
+    { name: "Aircrack-ng", icon: "📡", color: "#FF6B35" },
+    { name: "John the Ripper", icon: "🗝️", color: "#8B0000" },
+    { name: "Hashcat", icon: "🔐", color: "#FF4444" },
+    { name: "Netcat", icon: "🐱", color: "#4A90E2" },
+    { name: "Hydra", icon: "🐙", color: "#FF3366" },
+    { name: "Nikto", icon: "🔎", color: "#9B59B6" },
+    { name: "SQLmap", icon: "💉", color: "#E74C3C" },
+    { name: "Maltego", icon: "🕸️", color: "#1ABC9C" },
+    { name: "Shodan", icon: "👁️", color: "#C0392B" }
   ]
 
-  const tools = [
-    { name: "Figma", icon: "figma", level: 88 },
-    { name: "GitHub", icon: "github", level: 95 },
-    { name: "VS Code", icon: "vscode", level: 98 },
-    { name: "WordPress", icon: "wordpress", level: 75 },
-    { name: "Docker", icon: "docker", level: 78 },
-    { name: "Linux", icon: "linux", level: 85 },
-  ]
-
-  const databases = [
-    { name: "MongoDB", icon: "mongodb", level: 85 },
-    { name: "MySQL", icon: "mysql", level: 88 },
-    { name: "PostgreSQL", icon: "postgresql", level: 82 },
-    { name: "REST APIs", icon: "api", level: 92 },
-    { name: "GraphQL", icon: "graphql", level: 75 },
-  ]
-
-  const security = [
-    { name: "Kali Linux", icon: "kali", level: 85 },
-    { name: "Nmap", icon: "nmap", level: 90 },
-    { name: "Metasploit", icon: "metasploit", level: 78 },
-    { name: "Burp Suite", icon: "burp", level: 88 },
-    { name: "Wireshark", icon: "wireshark", level: 85 },
-    { name: "OWASP ZAP", icon: "zap", level: 80 },
-    { name: "Nessus", icon: "nessus", level: 75 },
-    { name: "Aircrack-ng", icon: "aircrack", level: 70 },
-    { name: "John the Ripper", icon: "john", level: 72 },
-    { name: "Hashcat", icon: "hashcat", level: 68 },
-  ]
-
-  const collaboration = [
-    { name: "Git", icon: "git", level: 95 },
-    { name: "GitLab", icon: "gitlab", level: 88 },
-    { name: "Bitbucket", icon: "bitbucket", level: 82 },
-    { name: "Jira", icon: "jira", level: 85 },
-    { name: "Slack", icon: "slack", level: 90 },
-    { name: "Notion", icon: "notion", level: 88 },
-  ]
-
-  // Skill icons mapping with colors
-  const skillIcons = {
-    // Languages
-    "Python": { icon: "🐍", color: "from-yellow-400 to-blue-500" },
-    "JavaScript": { icon: "🟨", color: "from-yellow-400 to-yellow-600" },
-    "TypeScript": { icon: "🔷", color: "from-blue-400 to-blue-600" },
-    "HTML": { icon: "🌐", color: "from-orange-400 to-red-500" },
-    "CSS": { icon: "🎨", color: "from-blue-400 to-purple-500" },
-    
-    // Frameworks
-    "React": { icon: "⚛️", color: "from-cyan-400 to-blue-500" },
-    "Next.js": { icon: "▲", color: "from-gray-800 to-black" },
-    "Django": { icon: "🐍", color: "from-green-600 to-green-800" },
-    "Express.js": { icon: "🚀", color: "from-gray-600 to-gray-800" },
-    "Tailwind CSS": { icon: "💨", color: "from-cyan-400 to-teal-500" },
-    
-    // Tools
-    "Figma": { icon: "📐", color: "from-purple-400 to-pink-500" },
-    "GitHub": { icon: "🐙", color: "from-gray-700 to-black" },
-    "VS Code": { icon: "💻", color: "from-blue-500 to-blue-700" },
-    "WordPress": { icon: "📝", color: "from-blue-600 to-gray-700" },
-    "Docker": { icon: "🐳", color: "from-blue-400 to-cyan-500" },
-    "Linux": { icon: "🐧", color: "from-yellow-400 to-orange-500" },
-    
-    // Databases
-    "MongoDB": { icon: "🍃", color: "from-green-500 to-green-700" },
-    "MySQL": { icon: "🗄️", color: "from-orange-400 to-blue-600" },
-    "PostgreSQL": { icon: "🐘", color: "from-blue-600 to-indigo-600" },
-    "REST APIs": { icon: "🔗", color: "from-green-400 to-blue-500" },
-    "GraphQL": { icon: "🌐", color: "from-pink-500 to-purple-600" },
-    
-    // Security
-    "Kali Linux": { icon: "🔓", color: "from-black to-red-600" },
-    "Nmap": { icon: "🔍", color: "from-blue-500 to-purple-600" },
-    "Metasploit": { icon: "💥", color: "from-red-500 to-red-700" },
-    "Burp Suite": { icon: "🔧", color: "from-orange-500 to-red-500" },
-    "Wireshark": { icon: "🦈", color: "from-blue-400 to-cyan-500" },
-    "OWASP ZAP": { icon: "⚡", color: "from-yellow-400 to-orange-500" },
-    "Nessus": { icon: "🛡️", color: "from-green-500 to-teal-600" },
-    "Aircrack-ng": { icon: "📡", color: "from-purple-500 to-indigo-600" },
-    "John the Ripper": { icon: "🗝️", color: "from-gray-600 to-gray-800" },
-    "Hashcat": { icon: "🔐", color: "from-red-400 to-pink-600" },
-    
-    // Collaboration
-    "Git": { icon: "🌿", color: "from-orange-500 to-red-500" },
-    "GitLab": { icon: "🦊", color: "from-orange-400 to-purple-500" },
-    "Bitbucket": { icon: "🪣", color: "from-blue-500 to-blue-700" },
-    "Jira": { icon: "📋", color: "from-blue-600 to-indigo-600" },
-    "Slack": { icon: "💬", color: "from-purple-500 to-pink-500" },
-    "Notion": { icon: "📓", color: "from-gray-700 to-black" }
-  }
-
-  // Combine all skills for tickers
-  const allSkills = [...languages, ...frameworks, ...tools, ...databases, ...security, ...collaboration]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  }
-
-  const sectionVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 60,
-      scale: 0.95
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  }
-
-  const titleVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -30,
-      scale: 0.9
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  }
-
-  const skillSections = [
-    {
-      title: "Languages & Frameworks",
-      subtitle: "Core Programming Technologies",
-      icon: "💻",
-      skills: [...languages, ...frameworks],
-      gradient: "from-blue-500/10 via-purple-500/10 to-pink-500/10",
-      borderGradient: "from-blue-500 to-purple-500"
-    },
-    {
-      title: "Development Tools",
-      subtitle: "Design & Development Platforms", 
-      icon: "🛠️",
-      skills: tools,
-      gradient: "from-green-500/10 via-teal-500/10 to-blue-500/10",
-      borderGradient: "from-green-500 to-teal-500"
-    },
-    {
-      title: "Databases & APIs",
-      subtitle: "Data Management & Integration",
-      icon: "🗄️",
-      skills: databases,
-      gradient: "from-orange-500/10 via-red-500/10 to-pink-500/10",
-      borderGradient: "from-orange-500 to-red-500"
-    },
-    {
-      title: "Version Control & Collaboration",
-      subtitle: "Team Workflow & Project Management",
-      icon: "🤝",
-      skills: collaboration,
-      gradient: "from-indigo-500/10 via-blue-500/10 to-cyan-500/10",
-      borderGradient: "from-indigo-500 to-blue-500"
-    },
-    {
-      title: "Cybersecurity Arsenal",
-      subtitle: "Penetration Testing & Security Analysis",
-      icon: "🔒",
-      skills: security,
-      gradient: "from-red-500/10 via-orange-500/10 to-yellow-500/10",
-      borderGradient: "from-red-500 to-orange-500"
-    }
-  ]
+  // Duplicate arrays for seamless loop
+  const fullStackLoop = [...fullStackTech, ...fullStackTech]
+  const cyberSecLoop = [...cyberSecTech, ...cyberSecTech]
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-black text-white relative">
+      {/* Colorful Grid Lines */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(147, 51, 234, 0.1) 1px, transparent 1px),
+            linear-gradient(45deg, rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+            linear-gradient(-45deg, rgba(239, 68, 68, 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px, 80px 80px, 120px 120px, 120px 120px'
+        }}></div>
+        
+        {/* Floating colored elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-40 left-1/4 w-28 h-28 bg-green-500/10 rounded-full blur-xl animate-pulse delay-2000"></div>
+        <div className="absolute bottom-20 right-1/3 w-36 h-36 bg-red-500/10 rounded-full blur-xl animate-pulse delay-3000"></div>
+        
+        {/* Gradient borders */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-green-500/50 to-transparent"></div>
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-red-500/50 to-transparent"></div>
+      </div>
+
       <Navbar />
 
-      <main className="flex-grow container mx-auto py-20 px-4 relative">
-        {/* Floating Background Elements */}
-        {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-40 h-40 bg-gradient-to-r from-pink-400/10 to-orange-400/10 rounded-full blur-xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-40 left-1/4 w-28 h-28 bg-gradient-to-r from-green-400/10 to-teal-400/10 rounded-full blur-xl animate-pulse delay-2000"></div>
-        </div> */}
-
-        {/* Hero Section */}
+      <main className="container mx-auto px-6 pt-32 pb-20 relative z-10">
+        {/* Hero Section - Clean and Minimal */}
         <motion.div 
-          className="text-center mb-16 relative z-10"
-          variants={titleVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <motion.div
-            className="inline-block mb-6"
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <div className="text-6xl mb-4">⚡</div>
-          </motion.div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-gray-900 to-black dark:from-white dark:via-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
-            My Skills
+          <h1 className="text-5xl md:text-7xl font-semibold mb-6 text-white">
+            Technology Arsenal
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
-            A comprehensive toolkit spanning full-stack development, cybersecurity, and modern collaboration
+          <p className="text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
+            Crafting secure digital experiences through full-stack development and cybersecurity expertise
           </p>
+        </motion.div>
+
+        {/* Full-Stack Development Section */}
+        <motion.section 
+          className="mb-32"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">
+              Full-Stack Development
+            </h2>
+            <div className="w-20 h-px bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto"></div>
+          </div>
           
-          {/* Stats */}
-          <motion.div 
-            className="flex justify-center gap-8 mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{allSkills.length}+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Technologies</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">5</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Categories</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 dark:text-green-400">3+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Top Ticker */}
-        {/* <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="mb-16"
-        >
-          <SkillTicker skills={allSkills} direction="left" />
-        </motion.div> */}
-
-        {/* Skills Sections */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="space-y-20"
-        >
-          {skillSections.map((section, sectionIndex) => (
-            <motion.section
-              key={section.title}
-              variants={sectionVariants}
-              className="relative"
+          {/* Clean Carousel */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              ref={fullStackCarouselRef}
+              className="flex space-x-16"
+              animate={{
+                x: [0, -80 * fullStackTech.length]
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: fullStackTech.length * 3,
+                  ease: "linear",
+                },
+              }}
+              style={{ width: `${fullStackLoop.length * 160}px` }}
             >
-              {/* Section Header */}
-              <div className="text-center mb-12">
+              {fullStackLoop.map((tech, index) => (
                 <motion.div
-                  className="inline-flex items-center gap-4 mb-4"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  key={`fullstack-${index}`}
+                  className="flex-shrink-0 group cursor-pointer text-center"
+                  whileHover={{ 
+                    scale: 1.1,
+                    transition: { type: "spring", stiffness: 300 }
+                  }}
+                  onMouseEnter={() => {
+                    if (fullStackCarouselRef.current) {
+                      fullStackCarouselRef.current.style.animationPlayState = 'paused'
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (fullStackCarouselRef.current) {
+                      fullStackCarouselRef.current.style.animationPlayState = 'running'
+                    }
+                  }}
                 >
-                  <div className="text-4xl">{section.icon}</div>
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                      {section.title}
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-400 font-medium mt-1">
-                      {section.subtitle}
-                    </p>
+                  <div 
+                    className="text-6xl mb-4 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                    style={{
+                      color: tech.color,
+                    }}
+                  >
+                    {tech.icon}
                   </div>
+                  <h3 className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
+                    {tech.name}
+                  </h3>
                 </motion.div>
-                
-                {/* Progress Bar */}
-                <div className="w-24 h-1 mx-auto rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-                  <motion.div
-                    className={`h-full bg-gradient-to-r ${section.borderGradient} rounded-full`}
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ delay: sectionIndex * 0.2 + 0.5, duration: 1 }}
-                  />
-                </div>
-              </div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
 
-              {/* Skills Grid */}
-              <div className={`p-8 rounded-3xl bg-gradient-to-br ${section.gradient} backdrop-blur-sm border border-white/20 dark:border-gray-700/30 shadow-xl`}>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                  {section.skills.map((skill, index) => (
-                    <motion.div
-                      key={`${section.title}-${skill.name}`}
-                      initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ 
-                        delay: sectionIndex * 0.1 + index * 0.05,
-                        duration: 0.5,
-                        ease: "easeOut"
-                      }}
-                      whileHover={{ 
-                        scale: 1.05, 
-                        y: -5,
-                        transition: { type: "spring", stiffness: 300 }
-                      }}
-                      className="group"
-                    >
-                      <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50 dark:border-gray-700/50 hover:shadow-2xl transition-all duration-300">
-                        {/* Skill Icon/Name */}
-                        <div className="text-center mb-3">
-                          <div className={`w-12 h-12 mx-auto mb-2 bg-gradient-to-br ${skillIcons[skill.name]?.color || 'from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600'} rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                          <span className="filter drop-shadow-sm">
-                          {skillIcons[skill.name]?.icon || skill.name.charAt(0)}
-                          </span>
-                        </div>
-                          <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                            {skill.name}
-                          </h3>
-                        </div>
-
-                        {/* Progress Bar */}
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-                          <motion.div
-                            className={`h-full bg-gradient-to-r ${section.borderGradient} rounded-full`}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${skill.level}%` }}
-                            transition={{ 
-                              delay: sectionIndex * 0.2 + index * 0.1 + 0.5,
-                              duration: 1,
-                              ease: "easeOut"
-                            }}
-                          />
-                        </div>
-                        
-                        {/* Proficiency Text */}
-                        <div className="text-xs text-gray-600 dark:text-gray-400 text-center mt-2 font-medium">
-                          {skill.level}% Proficient
-                        </div>
-
-                        {/* Hover Glow Effect */}
-                        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${section.borderGradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none blur-xl`}></div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.section>
-          ))}
-        </motion.div>
-
-        {/* Bottom Ticker */}
-        {/* <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="mt-16"
+        {/* Cybersecurity Section */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
         >
-          <SkillTicker skills={allSkills} direction="right" />
-        </motion.div> */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-white">
+              Cybersecurity Arsenal
+            </h2>
+            <div className="w-20 h-px bg-gradient-to-r from-red-500 to-orange-500 mx-auto"></div>
+          </div>
+          
+          {/* Clean Carousel - Moving Right to Left */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              ref={cyberCarouselRef}
+              className="flex space-x-16"
+              animate={{
+                x: [-80 * cyberSecTech.length, 0]
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: cyberSecTech.length * 3,
+                  ease: "linear",
+                },
+              }}
+              style={{ width: `${cyberSecLoop.length * 160}px` }}
+            >
+              {cyberSecLoop.map((tech, index) => (
+                <motion.div
+                  key={`cyber-${index}`}
+                  className="flex-shrink-0 group cursor-pointer text-center"
+                  whileHover={{ 
+                    scale: 1.1,
+                    transition: { type: "spring", stiffness: 300 }
+                  }}
+                  onMouseEnter={() => {
+                    if (cyberCarouselRef.current) {
+                      cyberCarouselRef.current.style.animationPlayState = 'paused'
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (cyberCarouselRef.current) {
+                      cyberCarouselRef.current.style.animationPlayState = 'running'
+                    }
+                  }}
+                >
+                  <div 
+                    className="text-6xl mb-4 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                    style={{
+                      color: tech.color,
+                    }}
+                  >
+                    {tech.icon}
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
+                    {tech.name}
+                  </h3>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
       </main>
 
       <Footer />

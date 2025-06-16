@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ThemeToggle } from "@/components/theme-toggle"
 import Link from "next/link"
-// import Navbar from "@/components/navbar"
-// import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 
 // Enhanced Animated Terminal Component
 const EnhancedAnimatedCode = () => {
@@ -195,54 +195,21 @@ const MatrixRain = () => {
   )
 }
 
-// Navbar Component
-const Navbar = () => (
-  <motion.nav
-    initial={{ y: -100, opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.8 }}
-    className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10"
-  >
-    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-      <motion.div
-        className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
-        whileHover={{ scale: 1.05 }}
-      >
-        Jeff.dev
-      </motion.div>
-      
-      <div className="hidden md:flex space-x-8">
-        {["Home", "About", "Skills", "Projects", "Contact"].map((item, index) => (
-          <motion.a
-            key={item}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: index * 0.1 + 0.5 }}
-            href={`/${item.toLowerCase()}`}
-            className="text-gray-300 hover:text-white transition-colors relative group"
-          >
-            {item}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-300"></span>
-          </motion.a>
-        ))}
-      </div>
-    </div>
-  </motion.nav>
-)
 
-// Footer Component
-const Footer = () => (
-  <motion.footer
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 2 }}
-    className="relative z-10 py-8 text-center text-gray-400 border-t border-white/10"
-  >
-    <div className="container mx-auto px-4">
-      <p>&copy; 2025 Jeff Mutugi. Crafting secure digital experiences.</p>
-    </div>
-  </motion.footer>
-)
+// Don't uncomment this.
+// // Footer Component
+// const Footer = () => (
+//   <motion.footer
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ delay: 2 }}
+//     className="relative z-10 py-8 text-center text-gray-400 border-t border-white/10"
+//   >
+//     <div className="container mx-auto px-4">
+//       <p>&copy; 2025 Jeff Mutugi. Crafting secure digital experiences.</p>
+//     </div>
+//   </motion.footer>
+// )
 
 export function HomePage() {
   const [isVisible, setIsVisible] = useState(false)

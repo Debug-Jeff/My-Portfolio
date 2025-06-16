@@ -16,9 +16,13 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border/40">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold hover:text-primary transition-colors">
-          Jeff Mutugi
-        </Link>
+        <motion.div>
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
+          whileHover={{ scale: 1.05 }}>
+            Jeff.dev
+          </Link>
+        </motion.div>
+        
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
@@ -64,13 +68,13 @@ export default function Navbar() {
               >
                 About
               </Link>
-              <Link
+              {/* <Link
                 href="/skills"
                 className="hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Skills
-              </Link>
+              </Link> */}
               <Link
                 href="/projects"
                 className="hover:text-primary transition-colors"

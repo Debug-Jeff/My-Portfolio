@@ -64,15 +64,15 @@ export default function CommandPalette() {
       keywords: ["projects", "portfolio", "work", "code"],
       category: "Navigation",
     },
-    {
-      id: "testimonials",
-      title: "Testimonials",
-      description: "Read what others say about my work",
-      icon: <MessageSquare size={16} />,
-      action: () => router.push("/testimonials"),
-      keywords: ["testimonials", "reviews", "feedback"],
-      category: "Navigation",
-    },
+    // {
+    //   id: "testimonials",
+    //   title: "Testimonials",
+    //   description: "Read what others say about my work",
+    //   icon: <MessageSquare size={16} />,
+    //   action: () => router.push("/testimonials"),
+    //   keywords: ["testimonials", "reviews", "feedback"],
+    //   category: "Navigation",
+    // },
     {
       id: "contact",
       title: "Contact Me",
@@ -106,15 +106,15 @@ export default function CommandPalette() {
       keywords: ["theme", "dark", "light", "mode"],
       category: "Settings",
     },
-    {
-      id: "request-project",
-      title: "Request Project",
-      description: "Submit a detailed project request",
-      icon: <Briefcase size={16} />,
-      action: () => router.push("/request-project"),
-      keywords: ["request", "project", "hire", "work"],
-      category: "Actions",
-    },
+    // {
+    //   id: "request-project",
+    //   title: "Request Project",
+    //   description: "Submit a detailed project request",
+    //   icon: <Briefcase size={16} />,
+    //   action: () => router.push("/request-project"),
+    //   keywords: ["request", "project", "hire", "work"],
+    //   category: "Actions",
+    // },
   ]
 
   const filteredCommands = commands.filter(

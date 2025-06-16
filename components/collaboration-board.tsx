@@ -257,274 +257,274 @@ export default function CollaborationBoard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Collaboration Board</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Join me in building amazing open source projects! Whether you're a beginner looking to learn or an expert
-          wanting to contribute, there's a place for you here.
-        </p>
-      </div>
+    // <div className="max-w-7xl mx-auto p-6">
+    //   <div className="text-center mb-12">
+    //     <h1 className="text-4xl font-bold mb-4">Collaboration Board</h1>
+    //     <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+    //       Join me in building amazing open source projects! Whether you're a beginner looking to learn or an expert
+    //       wanting to contribute, there's a place for you here.
+    //     </p>
+    //   </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-8 justify-center">
-        {[
-          { key: "all", label: "All Projects" },
-          { key: "seeking", label: "Seeking Contributors" },
-          { key: "active", label: "Active" },
-          { key: "planning", label: "Planning" },
-          { key: "open source", label: "Open Source" },
-          { key: "community", label: "Community" },
-          { key: "research", label: "Research" },
-          { key: "startup", label: "Startup" },
-        ].map((filterOption) => (
-          <Button
-            key={filterOption.key}
-            variant={filter === filterOption.key ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter(filterOption.key)}
-          >
-            {filterOption.label}
-          </Button>
-        ))}
-      </div>
+    //   {/* Filters */}
+    //   <div className="flex flex-wrap gap-2 mb-8 justify-center">
+    //     {[
+    //       { key: "all", label: "All Projects" },
+    //       { key: "seeking", label: "Seeking Contributors" },
+    //       { key: "active", label: "Active" },
+    //       { key: "planning", label: "Planning" },
+    //       { key: "open source", label: "Open Source" },
+    //       { key: "community", label: "Community" },
+    //       { key: "research", label: "Research" },
+    //       { key: "startup", label: "Startup" },
+    //     ].map((filterOption) => (
+    //       <Button
+    //         key={filterOption.key}
+    //         variant={filter === filterOption.key ? "default" : "outline"}
+    //         size="sm"
+    //         onClick={() => setFilter(filterOption.key)}
+    //       >
+    //         {filterOption.label}
+    //       </Button>
+    //     ))}
+    //   </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProjects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card className="h-full hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className={`p-2 rounded-lg ${project.color} text-white`}>{project.icon}</div>
-                  <div className="flex gap-2">
-                    <Badge className={getStatusColor(project.status)}>{project.status}</Badge>
-                    <Badge className={getDifficultyColor(project.difficulty)}>{project.difficulty}</Badge>
-                  </div>
-                </div>
-                <CardTitle className="text-xl">{project.title}</CardTitle>
-                <CardDescription className="line-clamp-3">{project.description}</CardDescription>
-              </CardHeader>
+    //   {/* Projects Grid */}
+    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    //     {filteredProjects.map((project, index) => (
+    //       <motion.div
+    //         key={project.id}
+    //         initial={{ opacity: 0, y: 20 }}
+    //         animate={{ opacity: 1, y: 0 }}
+    //         transition={{ delay: index * 0.1 }}
+    //       >
+    //         <Card className="h-full hover:shadow-lg transition-shadow">
+    //           <CardHeader>
+    //             <div className="flex items-start justify-between">
+    //               <div className={`p-2 rounded-lg ${project.color} text-white`}>{project.icon}</div>
+    //               <div className="flex gap-2">
+    //                 <Badge className={getStatusColor(project.status)}>{project.status}</Badge>
+    //                 <Badge className={getDifficultyColor(project.difficulty)}>{project.difficulty}</Badge>
+    //               </div>
+    //             </div>
+    //             <CardTitle className="text-xl">{project.title}</CardTitle>
+    //             <CardDescription className="line-clamp-3">{project.description}</CardDescription>
+    //           </CardHeader>
 
-              <CardContent className="space-y-4">
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <Badge key={tech} variant="secondary" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <Badge variant="secondary" className="text-xs">
-                      +{project.technologies.length - 3}
-                    </Badge>
-                  )}
-                </div>
+    //           <CardContent className="space-y-4">
+    //             {/* Technologies */}
+    //             <div className="flex flex-wrap gap-1">
+    //               {project.technologies.slice(0, 3).map((tech) => (
+    //                 <Badge key={tech} variant="secondary" className="text-xs">
+    //                   {tech}
+    //                 </Badge>
+    //               ))}
+    //               {project.technologies.length > 3 && (
+    //                 <Badge variant="secondary" className="text-xs">
+    //                   +{project.technologies.length - 3}
+    //                 </Badge>
+    //               )}
+    //             </div>
 
-                {/* Stats */}
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4" />
-                    {project.stars}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <GitFork className="w-4 h-4" />
-                    {project.forks}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    {project.contributors}
-                  </div>
-                </div>
+    //             {/* Stats */}
+    //             <div className="flex items-center gap-4 text-sm text-muted-foreground">
+    //               <div className="flex items-center gap-1">
+    //                 <Star className="w-4 h-4" />
+    //                 {project.stars}
+    //               </div>
+    //               <div className="flex items-center gap-1">
+    //                 <GitFork className="w-4 h-4" />
+    //                 {project.forks}
+    //               </div>
+    //               <div className="flex items-center gap-1">
+    //                 <Users className="w-4 h-4" />
+    //                 {project.contributors}
+    //               </div>
+    //             </div>
 
-                {/* Looking For */}
-                <div>
-                  <p className="text-sm font-medium mb-2">Looking for:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {project.lookingFor.slice(0, 2).map((role) => (
-                      <Badge key={role} variant="outline" className="text-xs">
-                        {role}
-                      </Badge>
-                    ))}
-                    {project.lookingFor.length > 2 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{project.lookingFor.length - 2}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+    //             {/* Looking For */}
+    //             <div>
+    //               <p className="text-sm font-medium mb-2">Looking for:</p>
+    //               <div className="flex flex-wrap gap-1">
+    //                 {project.lookingFor.slice(0, 2).map((role) => (
+    //                   <Badge key={role} variant="outline" className="text-xs">
+    //                     {role}
+    //                   </Badge>
+    //                 ))}
+    //                 {project.lookingFor.length > 2 && (
+    //                   <Badge variant="outline" className="text-xs">
+    //                     +{project.lookingFor.length - 2}
+    //                   </Badge>
+    //                 )}
+    //               </div>
+    //             </div>
 
-                {/* Timeline */}
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Calendar className="w-4 h-4" />
-                  <span>Timeline: {project.timeline}</span>
-                </div>
+    //             {/* Timeline */}
+    //             <div className="flex items-center gap-2 text-sm text-muted-foreground">
+    //               <Calendar className="w-4 h-4" />
+    //               <span>Timeline: {project.timeline}</span>
+    //             </div>
 
-                {/* Actions */}
-                <div className="flex gap-2 pt-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size="sm" className="flex-1" onClick={() => setSelectedProject(project)}>
-                        <Heart className="w-4 h-4 mr-2" />
-                        Join Project
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-md">
-                      <DialogHeader>
-                        <DialogTitle>Join {project.title}</DialogTitle>
-                        <DialogDescription>
-                          Tell me about yourself and why you'd like to contribute to this project.
-                        </DialogDescription>
-                      </DialogHeader>
+    //             {/* Actions */}
+    //             <div className="flex gap-2 pt-2">
+    //               <Dialog>
+    //                 <DialogTrigger asChild>
+    //                   <Button size="sm" className="flex-1" onClick={() => setSelectedProject(project)}>
+    //                     <Heart className="w-4 h-4 mr-2" />
+    //                     Join Project
+    //                   </Button>
+    //                 </DialogTrigger>
+    //                 <DialogContent className="max-w-md">
+    //                   <DialogHeader>
+    //                     <DialogTitle>Join {project.title}</DialogTitle>
+    //                     <DialogDescription>
+    //                       Tell me about yourself and why you'd like to contribute to this project.
+    //                     </DialogDescription>
+    //                   </DialogHeader>
 
-                      <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                          <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="Your full name" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                   <Form {...form}>
+    //                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="name"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>Name</FormLabel>
+    //                             <FormControl>
+    //                               <Input placeholder="Your full name" {...field} />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="your.email@example.com" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="email"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>Email</FormLabel>
+    //                             <FormControl>
+    //                               <Input placeholder="your.email@example.com" {...field} />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <FormField
-                            control={form.control}
-                            name="github"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>GitHub Username (Optional)</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="your-github-username" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="github"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>GitHub Username (Optional)</FormLabel>
+    //                             <FormControl>
+    //                               <Input placeholder="your-github-username" {...field} />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <FormField
-                            control={form.control}
-                            name="skills"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Your Skills</FormLabel>
-                                <FormControl>
-                                  <Textarea placeholder="Describe your relevant skills and experience..." {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="skills"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>Your Skills</FormLabel>
+    //                             <FormControl>
+    //                               <Textarea placeholder="Describe your relevant skills and experience..." {...field} />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <FormField
-                            control={form.control}
-                            name="interest"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Why This Project?</FormLabel>
-                                <FormControl>
-                                  <Textarea
-                                    placeholder="What interests you about this project? How would you like to contribute?"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="interest"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>Why This Project?</FormLabel>
+    //                             <FormControl>
+    //                               <Textarea
+    //                                 placeholder="What interests you about this project? How would you like to contribute?"
+    //                                 {...field}
+    //                               />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <FormField
-                            control={form.control}
-                            name="availability"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Availability</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="e.g., 10 hours/week, weekends only, etc." {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+    //                       <FormField
+    //                         control={form.control}
+    //                         name="availability"
+    //                         render={({ field }) => (
+    //                           <FormItem>
+    //                             <FormLabel>Availability</FormLabel>
+    //                             <FormControl>
+    //                               <Input placeholder="e.g., 10 hours/week, weekends only, etc." {...field} />
+    //                             </FormControl>
+    //                             <FormMessage />
+    //                           </FormItem>
+    //                         )}
+    //                       />
 
-                          <Button type="submit" className="w-full" disabled={isSubmitting}>
-                            {isSubmitting ? "Submitting..." : "Submit Application"}
-                          </Button>
-                        </form>
-                      </Form>
-                    </DialogContent>
-                  </Dialog>
+    //                       <Button type="submit" className="w-full" disabled={isSubmitting}>
+    //                         {isSubmitting ? "Submitting..." : "Submit Application"}
+    //                       </Button>
+    //                     </form>
+    //                   </Form>
+    //                 </DialogContent>
+    //               </Dialog>
 
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-4 h-4 mr-2" />
-                      GitHub
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+    //               <Button variant="outline" size="sm" asChild>
+    //                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+    //                   <Github className="w-4 h-4 mr-2" />
+    //                   GitHub
+    //                 </a>
+    //               </Button>
+    //             </div>
+    //           </CardContent>
+    //         </Card>
+    //       </motion.div>
+    //     ))}
+    //   </div>
 
-      {/* Call to Action */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-16 text-center"
-      >
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2">
-              <Plus className="w-6 h-6" />
-              Have a Project Idea?
-            </CardTitle>
-            <CardDescription>Want to start a new collaboration or suggest a project? Let's discuss it!</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild>
-                <a href="/contact">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Propose a Project
-                </a>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="https://github.com/jeffmutugi" target="_blank" rel="noopener noreferrer">
-                  <Github className="w-4 h-4 mr-2" />
-                  View All Repositories
-                </a>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </div>
+    //   {/* Call to Action */}
+    //   <motion.div
+    //     initial={{ opacity: 0, y: 20 }}
+    //     animate={{ opacity: 1, y: 0 }}
+    //     transition={{ delay: 0.5 }}
+    //     className="mt-16 text-center"
+    //   >
+    //     <Card className="max-w-2xl mx-auto">
+    //       <CardHeader>
+    //         <CardTitle className="flex items-center justify-center gap-2">
+    //           <Plus className="w-6 h-6" />
+    //           Have a Project Idea?
+    //         </CardTitle>
+    //         <CardDescription>Want to start a new collaboration or suggest a project? Let's discuss it!</CardDescription>
+    //       </CardHeader>
+    //       <CardContent>
+    //         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+    //           <Button asChild>
+    //             <a href="/contact">
+    //               <MessageSquare className="w-4 h-4 mr-2" />
+    //               Propose a Project
+    //             </a>
+    //           </Button>
+    //           <Button variant="outline" asChild>
+    //             <a href="https://github.com/jeffmutugi" target="_blank" rel="noopener noreferrer">
+    //               <Github className="w-4 h-4 mr-2" />
+    //               View All Repositories
+    //             </a>
+    //           </Button>
+    //         </div>
+    //       </CardContent>
+    //     </Card>
+    //   </motion.div>
+    // </div>
   )
 }
