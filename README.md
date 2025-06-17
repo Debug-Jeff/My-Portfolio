@@ -27,7 +27,7 @@ A modern, interactive portfolio website showcasing cybersecurity expertise, full
 - **Icons**: Lucide React
 - **Email**: EmailJS
 - **Analytics**: Google Analytics
-- **Deployment**: Vercel
+- **Deployment**: Netlify
 
 ## 📦 Installation
 
@@ -104,15 +104,14 @@ The app is configured as a PWA with:
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Vercel/Netlify
 1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard
+2. Connect your repository to Vercel/Netlify
+3. Add environment variables in Vercel/Netlify
 4. Deploy automatically on push
 
 ### Other Platforms
 The app can be deployed to any platform that supports Next.js:
-- Netlify
 - Railway
 - DigitalOcean App Platform
 - AWS Amplify
@@ -125,22 +124,6 @@ The app can be deployed to any platform that supports Next.js:
 - **Images**: Next.js Image optimization
 - **Fonts**: Self-hosted for performance
 
-## 🔒 Security
-
-- Rate limiting on API routes
-- CAPTCHA protection on forms
-- Security headers configured
-- Input validation with Zod
-- XSS protection
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -149,9 +132,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you have any questions or need help with setup:
 
-- **Email**: jeff.mutugi@example.com
-- **GitHub**: [@jeffmutugi](https://github.com/jeffmutugi)
-- **LinkedIn**: [Jeff Mutugi](https://linkedin.com/in/jeffmutugi)
+- **Email**: jmutugi00.0@gmail.com
+- **GitHub**: [@Debug-Jeff](https://github.com/Debug-Jeff)
+- **LinkedIn**: [Jeff Mutugi](https://www.linkedin.com/in/jeff-m-7a2123305/)
 
 ## 🙏 Acknowledgments
 
