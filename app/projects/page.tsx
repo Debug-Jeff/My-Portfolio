@@ -137,17 +137,17 @@ export default function ProjectsPage() {
       details:
         "A weather dashboard that provides real-time weather information, forecasting, and historical data. The application uses the OpenWeather API to fetch weather data and Chart.js to visualize temperature, humidity, and precipitation trends.",
     },
-    {
-      id: 10,
-      title: "Task Manager",
-      description: "Collaborative task management application with real-time updates.",
-      image: "/image-1.jpg?height=400&width=600",
-      stack: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS"],
-      github: "https://github.com/jeffmutugi/task-manager",
-      demo: "https://task-manager-jeff.vercel.app",
-      details:
-        "A collaborative task management application with real-time updates. The application allows users to create, assign, and track tasks. Features include task categorization, due dates, priority levels, and team collaboration.",
-    },
+    // {
+    //   id: 10,
+    //   title: "Task Manager",
+    //   description: "Collaborative task management application with real-time updates.",
+    //   image: "/image-1.jpg?height=400&width=600",
+    //   stack: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS"],
+    //   github: "https://github.com/jeffmutugi/task-manager",
+    //   demo: "https://task-manager-jeff.vercel.app",
+    //   details:
+    //     "A collaborative task management application with real-time updates. The application allows users to create, assign, and track tasks. Features include task categorization, due dates, priority levels, and team collaboration.",
+    // },
   ], [])
 
   return (

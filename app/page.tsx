@@ -9,11 +9,11 @@ export default function MinimalLandingPage() {
   const [showContent, setShowContent] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
 
-  // Auto-advance after 10 seconds
+  // Auto-advance after 5 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       handleExit()
-    }, 10000) // 10 seconds
+    }, 5500) // 5 seconds
 
     return () => clearTimeout(timer)
   }, [])
@@ -111,6 +111,7 @@ export default function MinimalLandingPage() {
               />
               
               {/* Subtle hint text */}
+              {/*Don't uncomment*/}
               {/* <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

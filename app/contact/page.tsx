@@ -42,9 +42,9 @@ export default function ContactPage() {
     // Initialize EmailJS with public key
     if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "your_public_key") {
       emailjs.init(EMAILJS_PUBLIC_KEY)
-      console.log("EmailJS initialized successfully")
+      // console.log("EmailJS initialized successfully")
     } else {
-      console.error("EmailJS Public Key is missing or not configured")
+      // console.error("EmailJS Public Key is missing or not configured")
     }
   }, [])
 
@@ -64,13 +64,6 @@ export default function ContactPage() {
     setSubmitStatus("idle")
 
     try {
-      // Debug: Log environment variables (remove in production)
-      console.log("Environment check:", {
-        serviceId: EMAILJS_SERVICE_ID,
-        templateId: EMAILJS_TEMPLATE_ID,
-        autoReplyTemplateId: EMAILJS_AUTOREPLY_TEMPLATE_ID,
-        publicKey: EMAILJS_PUBLIC_KEY?.substring(0, 5) + "...",
-      })
 
       // Validate environment variables before sending
       if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === "your_service_id") {
@@ -120,8 +113,8 @@ export default function ContactPage() {
         user_name: data.name,           // Alternative variable name
       }
 
-      console.log("Sending main contact email...")
-      console.log("Contact template parameters:", contactTemplateParams)
+      // console.log("Sending main contact email...")
+      // console.log("Contact template parameters:", contactTemplateParams)
 
       // Send the main contact email to you
       const contactResponse = await emailjs.send(
@@ -131,14 +124,14 @@ export default function ContactPage() {
         EMAILJS_PUBLIC_KEY
       )
 
-      console.log("Contact Email Response:", contactResponse)
+      // console.log("Contact Email Response:", contactResponse)
 
       if (contactResponse.status !== 200) {
         throw new Error(`Failed to send contact email: ${contactResponse.status}`)
       }
 
-      console.log("Sending auto-reply email...")
-      console.log("Auto-reply template parameters:", autoReplyTemplateParams)
+      // console.log("Sending auto-reply email...")
+      // console.log("Auto-reply template parameters:", autoReplyTemplateParams)
 
       // Send the auto-reply email to the user
       const autoReplyResponse = await emailjs.send(
@@ -148,7 +141,7 @@ export default function ContactPage() {
         EMAILJS_PUBLIC_KEY
       )
 
-      console.log("Auto-Reply Email Response:", autoReplyResponse)
+      // console.log("Auto-Reply Email Response:", autoReplyResponse)
 
       if (autoReplyResponse.status !== 200) {
         console.warn("Auto-reply failed, but main email was sent successfully")
