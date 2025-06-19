@@ -42,9 +42,6 @@ export default function ContactPage() {
     // Initialize EmailJS with public key
     if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "your_public_key") {
       emailjs.init(EMAILJS_PUBLIC_KEY)
-      // console.log("EmailJS initialized successfully")
-    } else {
-      // console.error("EmailJS Public Key is missing or not configured")
     }
   }, [])
 
@@ -64,7 +61,6 @@ export default function ContactPage() {
     setSubmitStatus("idle")
 
     try {
-
       // Validate environment variables before sending
       if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === "your_service_id") {
         throw new Error("EmailJS Service ID is not configured")
@@ -113,9 +109,6 @@ export default function ContactPage() {
         user_name: data.name,           // Alternative variable name
       }
 
-      // console.log("Sending main contact email...")
-      // console.log("Contact template parameters:", contactTemplateParams)
-
       // Send the main contact email to you
       const contactResponse = await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -124,27 +117,25 @@ export default function ContactPage() {
         EMAILJS_PUBLIC_KEY
       )
 
-      // console.log("Contact Email Response:", contactResponse)
-
       if (contactResponse.status !== 200) {
         throw new Error(`Failed to send contact email: ${contactResponse.status}`)
       }
 
-      // console.log("Sending auto-reply email...")
-      // console.log("Auto-reply template parameters:", autoReplyTemplateParams)
-
       // Send the auto-reply email to the user
-      const autoReplyResponse = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_AUTOREPLY_TEMPLATE_ID,
-        autoReplyTemplateParams,
-        EMAILJS_PUBLIC_KEY
-      )
+      try {
+        const autoReplyResponse = await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_AUTOREPLY_TEMPLATE_ID,
+          autoReplyTemplateParams,
+          EMAILJS_PUBLIC_KEY
+        )
 
-      // console.log("Auto-Reply Email Response:", autoReplyResponse)
-
-      if (autoReplyResponse.status !== 200) {
-        console.warn("Auto-reply failed, but main email was sent successfully")
+        if (autoReplyResponse.status !== 200) {
+          // Don't throw error for auto-reply failure, main email was sent successfully
+        }
+      } catch (autoReplyError) {
+        // Silently handle auto-reply failures in production
+        // Main email was sent successfully, which is what matters most
       }
 
       setSubmitStatus("success")
@@ -155,22 +146,17 @@ export default function ContactPage() {
       form.reset()
 
     } catch (error: any) {
-      console.error("Full EmailJS Error:", error)
-      console.error("Error message:", error.message)
-      console.error("Error status:", error.status)
-      console.error("Error text:", error.text)
-      
       let errorMessage = "There was an error sending your message."
       
       // Handle specific error cases
       if (error.message?.includes("not configured")) {
-        errorMessage = "Email service is not properly configured. Please check environment variables."
+        errorMessage = "Email service is not properly configured. Please try again later."
       } else if (error.status === 422) {
-        errorMessage = "Invalid email template or missing required fields."
+        errorMessage = "Please check all required fields and try again."
       } else if (error.status === 400) {
-        errorMessage = "Bad request. Please check your EmailJS configuration."
+        errorMessage = "Invalid request. Please try again."
       } else if (error.text) {
-        errorMessage = `EmailJS Error: ${error.text}`
+        errorMessage = "Failed to send message. Please try again."
       }
       
       setSubmitStatus("error")

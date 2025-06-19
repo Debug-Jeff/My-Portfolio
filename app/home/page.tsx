@@ -124,7 +124,7 @@ const FloatingParticles = () => {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-blue-500/30"
+          className="absolute rounded-full bg-blue-500/30 dark:bg-blue-500/30"
           style={{
             width: particle.size,
             height: particle.size,
@@ -170,7 +170,7 @@ const MatrixRain = () => {
       {drops.map((drop) => (
         <motion.div
           key={drop.id}
-          className="absolute text-green-400 font-mono text-xs"
+          className="absolute text-green-400 dark:text-green-400 font-mono text-xs"
           style={{ left: `${drop.x}%` }}
           initial={{ y: -100, opacity: 0 }}
           animate={{ 
@@ -195,22 +195,6 @@ const MatrixRain = () => {
   )
 }
 
-
-// Don't uncomment this.
-// // Footer Component
-// const Footer = () => (
-//   <motion.footer
-//     initial={{ opacity: 0 }}
-//     animate={{ opacity: 1 }}
-//     transition={{ delay: 2 }}
-//     className="relative z-10 py-8 text-center text-gray-400 border-t border-white/10"
-//   >
-//     <div className="container mx-auto px-4">
-//       <p>&copy; 2025 Jeff Mutugi. Crafting secure digital experiences.</p>
-//     </div>
-//   </motion.footer>
-// )
-
 export function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -219,7 +203,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 dark:from-gray-900 dark:via-black dark:to-gray-800 light:from-gray-50 light:via-white light:to-gray-100 text-white dark:text-white light:text-gray-900 relative overflow-hidden transition-colors duration-300">
       {/* Background Effects */}
       <FloatingParticles />
       <MatrixRain />
@@ -234,7 +218,7 @@ export function HomePage() {
         >
           <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center overflow-hidden">
             {/* Here you would replace this with your actual image */}
-            <div className="w-full h-full bg-gradient-to-br from-gray-600/50 to-gray-800/50 rounded-full flex items-center justify-center">
+            <div className="w-full h-full bg-gradient-to-br from-gray-600/50 to-gray-800/50 dark:from-gray-600/50 dark:to-gray-800/50 light:from-gray-300/50 light:to-gray-500/50 rounded-full flex items-center justify-center">
               <div className="text-[400px] opacity-60"></div>
             </div>
           </div>
@@ -242,7 +226,7 @@ export function HomePage() {
       </div> 
       
       {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-purple-900/20 dark:from-blue-900/20 dark:via-transparent dark:to-purple-900/20 light:from-blue-100/20 light:via-transparent light:to-purple-100/20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
 
       <Navbar />
@@ -291,7 +275,7 @@ export function HomePage() {
 
             {/* Description */}
             <motion.p
-              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-2xl"
+              className="text-xl md:text-2xl text-gray-300 dark:text-gray-300 light:text-gray-600 mb-8 leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}
@@ -303,7 +287,6 @@ export function HomePage() {
             </motion.p>
 
             {/* Action Buttons */}
-
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
               initial={{ opacity: 0, y: 20 }}
@@ -339,9 +322,9 @@ export function HomePage() {
             animate={isVisible ? { x: 0, opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-6 w-full max-w-lg relative overflow-hidden">
+            <div className="bg-gray-900/80 dark:bg-gray-900/80 light:bg-white/90 backdrop-blur-md border border-gray-700/50 dark:border-gray-700/50 light:border-gray-200/50 rounded-2xl shadow-2xl p-6 w-full max-w-lg relative overflow-hidden">
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50">
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-700/50 dark:border-gray-700/50 light:border-gray-200/50">
                 <div className="flex gap-2">
                   <motion.div 
                     className="w-3 h-3 rounded-full bg-red-500"
@@ -356,7 +339,7 @@ export function HomePage() {
                     whileHover={{ scale: 1.2 }}
                   ></motion.div>
                 </div>
-                <div className="ml-4 text-sm text-gray-400 font-mono">
+                <div className="ml-4 text-sm text-gray-400 dark:text-gray-400 light:text-gray-600 font-mono">
                   jeff@cybersec:~/portfolio $
                 </div>
                 <div className="ml-auto">
@@ -370,7 +353,57 @@ export function HomePage() {
 
               {/* Terminal Content */}
               <div className="min-h-[300px] relative">
-                <EnhancedAnimatedCode />
+                <div className="light:hidden">
+                  <EnhancedAnimatedCode />
+                </div>
+                <div className="hidden light:block">
+                  <div className="font-mono text-sm leading-relaxed text-gray-800">
+                    <div className="text-green-600 mb-1">
+                      <span className="text-gray-500 mr-3">01</span>
+                      // Welcome to Jeff's Digital Workspace
+                    </div>
+                    <div className="text-purple-600 mb-1">
+                      <span className="text-gray-500 mr-3">02</span>
+                      import &#123; CyberSecurity, WebDev &#125; from 'skills'
+                    </div>
+                    <div className="text-blue-600 mb-1">
+                      <span className="text-gray-500 mr-3">03</span>
+                      const developer = &#123;
+                    </div>
+                    <div className="text-yellow-600 mb-1">
+                      <span className="text-gray-500 mr-3">04</span>
+                      &nbsp;&nbsp;name: 'Jeff Mutugi',
+                    </div>
+                    <div className="text-yellow-600 mb-1">
+                      <span className="text-gray-500 mr-3">05</span>
+                      &nbsp;&nbsp;role: 'Cybersecurity Specialist',
+                    </div>
+                    <div className="text-yellow-600 mb-1">
+                      <span className="text-gray-500 mr-3">06</span>
+                      &nbsp;&nbsp;expertise: ['Penetration Testing', 'Web Dev'],
+                    </div>
+                    <div className="text-yellow-600 mb-1">
+                      <span className="text-gray-500 mr-3">07</span>
+                      &nbsp;&nbsp;passion: 'Building Secure Systems',
+                    </div>
+                    <div className="text-pink-600 mb-1">
+                      <span className="text-gray-500 mr-3">08</span>
+                      &nbsp;&nbsp;hack: () => 'Ethical Hacking Only! 🛡️'
+                    </div>
+                    <div className="text-blue-600 mb-1">
+                      <span className="text-gray-500 mr-3">09</span>
+                      &#125;
+                    </div>
+                    <div className="text-cyan-600 mb-1">
+                      <span className="text-gray-500 mr-3">10</span>
+                      developer.secure() // Always!
+                    </div>
+                    <div className="text-green-600 mb-1">
+                      <span className="text-gray-500 mr-3">11</span>
+                      // Ready to collaborate? Let's build something!
+                    </div>
+                  </div>
+                </div>
                 
                 {/* Scan Lines Effect */}
                 <div className="absolute inset-0 pointer-events-none">
@@ -383,7 +416,7 @@ export function HomePage() {
               </div>
 
               {/* Terminal Footer */}
-              <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-between items-center text-xs text-gray-500">
+              <div className="mt-4 pt-4 border-t border-gray-700/50 dark:border-gray-700/50 light:border-gray-200/50 flex justify-between items-center text-xs text-gray-500 dark:text-gray-500 light:text-gray-600">
                 <span>◉ Live Session</span>
                 <span>🔒 Secure Connection</span>
               </div>
