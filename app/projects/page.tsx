@@ -45,7 +45,7 @@ export default function ProjectsPage() {
       description: "A comprehensive health management system for hospitals and clinics.",
       image: "/carepulse.jpg?height=400&width=600",
       stack: ["React", "Node.js", "PostGres", "Express"],
-      github: "https://github.com/Debug-Jeff/v0-carepulse",
+      github: "https://github.com/Debug-Jeff/Carepulse",
       demo: "https://care-pulse.vercel.app",
       details:
         "Care-pulse is a comprehensive health management system designed to streamline hospital operations, patient management, and medical record keeping. The system includes features for appointment scheduling, patient records, billing, and inventory management.",
@@ -57,14 +57,14 @@ export default function ProjectsPage() {
       image: "/hope-bites.png?height=400&width=600",
       stack: ["React", "Node.js", "MongoDB", "Stripe", "Chart.js"],
       github: "https://github.com/hopebites/hopebites-platform",
-      demo: "https://hopebites.com",
+      demo: "https://hope-bites.vercel.app/",
       details: "HopeBites is a specialized e-commerce platform focused on providing nutritious snacks for children's healthy development. The platform features age-appropriate product filtering, nutritional tracking dashboards for parents, subscription-based delivery services, and educational content about child nutrition. It includes advanced features like personalized nutrition recommendations, growth tracking integration, pediatric nutritionist consultations, and a rewards program that encourages healthy eating habits in children."
     },
     {
       id: 3,
-      title: "Pomodoro Web Timer",
+      title: "Pomodoro Web Timer Application",
       description: "Productivity tool implementing the Pomodoro technique with customizable settings.",
-      image: "/pomodoro.jpg?height=400&width=600",
+      image: "/pomodoro.png?height=400&width=600",
       stack: ["React", "CSS", "LocalStorage API"],
       github: "https://github.com/Debug-Jeff/pomodoro",
       demo: "https://pomodoro-timer-jeff.vercel.app",
