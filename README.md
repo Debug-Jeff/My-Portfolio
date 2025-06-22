@@ -32,41 +32,33 @@ A modern, interactive portfolio website showcasing cybersecurity expertise, full
 ## 📦 Installation
 
 1. **Clone the repository**
-   \`\`\`bash
+   ```
    git clone https://github.com/Debug-Jeff/My-Portfolio.git
    cd portfolio
-   \`\`\`
+   ```
 
 2. **Install dependencies**
-   \`\`\`bash
+   ```
    npm install
    # or
    yarn install
    # or
    pnpm install
-   \`\`\`
+   ```
 
 3. **Set up environment variables**
-   \`\`\`bash
+   ```
    cp .env.example .env.local
-   \`\`\`
-   
-   Fill in the required environment variables:
-   \`\`\`env
-   NEXT_PUBLIC_GA_ID=your_google_analytics_id
-   NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_emailjs_service_id
-   NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
-   NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
-   \`\`\`
+   ```
 
 4. **Run the development server**
-   \`\`\`bash
+   ```
    npm run dev
    # or
    yarn dev
    # or
    pnpm dev
-   \`\`\`
+   ```
 
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
@@ -90,18 +82,6 @@ A modern, interactive portfolio website showcasing cybersecurity expertise, full
 3. Add your credentials to environment variables
 4. Test the contact form
 
-### Analytics Setup (Google Analytics)
-1. Create a GA4 property
-2. Get your Measurement ID
-3. Add it to `NEXT_PUBLIC_GA_ID`
-4. Analytics will be automatically tracked
-
-### PWA Configuration
-The app is configured as a PWA with:
-- Service worker for offline functionality
-- Web app manifest for installation
-- Optimized icons and splash screens
-
 ## 🚀 Deployment
 
 ### Vercel/Netlify
@@ -115,14 +95,6 @@ The app can be deployed to any platform that supports Next.js:
 - Railway
 - DigitalOcean App Platform
 - AWS Amplify
-
-## 📊 Performance
-
-- **Lighthouse Score**: 95+ across all metrics
-- **Core Web Vitals**: Optimized for LCP, FID, and CLS
-- **Bundle Size**: Optimized with code splitting
-- **Images**: Next.js Image optimization
-- **Fonts**: Self-hosted for performance
 
 ## 📄 License
 
@@ -146,5 +118,5 @@ If you have any questions or need help with setup:
 ---
 
 **Built with ❤️ by Jeff Mutugi**
-\`\`\`
+```
 
