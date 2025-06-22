@@ -99,7 +99,7 @@ export default function ProjectsPage() {
       description: "NASA Hackathon winning project for tracking orbital objects in space.",
       image: "/orrery-web-app.png?height=400&width=600",
       stack: ["Three.js", "Next.js", "NASA API", "Node.js"],
-      github: "https://github.com/jeffmutugi/space-orrery",
+      github: "https://github.com/Debug-Jeff/spaceapp",
       demo: "https://spaceapp-self.vercel.app/",
       details:
         "Space Orrery is a 3D visualization system for tracking orbital objects in space. The project won the 2024 NASA Space Apps Hackathon (Kenya edition). It uses NASA's open data to visualize satellites, space debris, and other objects in Earth's orbit.",
@@ -108,10 +108,10 @@ export default function ProjectsPage() {
       id: 7,
       title: "Crowd-source",
       description: "Telemedicine app connecting doctors with patients in remote areas.",
-      image: "/image-1.jpg?height=400&width=600",
+      image: "/crowd-source.png?height=400&width=600",
       stack: ["React", "Firebase", "WebRTC", "Express"],
-      github: "https://github.com/jeffmutugi/crowd-source",
-      demo: null,
+      github: "https://github.com/Debug-Jeff/crowd_src",
+      demo: "https://crowd-source-xi.vercel.app/",
       details:
         "Crowd-source is a telemedicine application that connects doctors with patients in remote areas. The app features video consultations, secure messaging, prescription management, and medical record keeping.",
     },
