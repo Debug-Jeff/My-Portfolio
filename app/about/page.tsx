@@ -59,7 +59,7 @@ export default function AboutPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-6">About Me</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Cybersecurity enthusiast and full-stack developer specializing in offensive security, 
-            with proven experience in building innovative solutions and winning hackathons.
+            with proven experience in building innovative solutions.
           </p>
         </motion.div>
 
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 <div className="absolute inset-4 rounded-xl overflow-hidden transform rotate-90">
                   <div className="w-full h-full transform -rotate-90 scale-110">
                     <Image 
-                      src="/jeff-image-1.jpg?height=300&width=300" 
+                      src="/my-image.jpg?height=300&width=300" 
                       alt="Jeff Mutugi - Cybersecurity Professional" 
                       width={300}
                       height={300}
@@ -100,13 +100,12 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold mb-4">Professional Overview</h2>
               <p className="text-lg leading-relaxed text-muted-foreground mb-6">
                 Computer Science student at Africa Nazarene University with a strong focus on cybersecurity 
-                and full-stack development. Winner of the 2024 NASA Space Apps Hackathon (Kenya) for developing 
-                an innovative space orrery system.
+                and full-stack development. Winner of the 2024 NASA Space Apps Hackathon (Kenya) as part of a team that developed an innovative space orrery system..
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
                 Experienced in penetration testing, CTF competitions, and building production-ready applications 
                 using modern technologies including React, Next.js, Python, and Django. Active contributor to 
-                tech communities and official at university's Cyberene tech club.
+                tech communities and official at university's tech club.
               </p>
             </div>
 

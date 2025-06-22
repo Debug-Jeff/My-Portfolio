@@ -359,7 +359,7 @@ export default function ContactPage() {
                     </div>
                     <div className="flex items-center">
                       <span className="text-sm text-muted-foreground w-16">Contact:</span>
-                      <span>+254 114150522</span>
+                      <span>+254 114 150 522</span>
                     </div>
                   </div>
                 </div>
@@ -367,7 +367,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold mb-4">Response Time</h3>
                   <p className="text-sm text-muted-foreground">
-                    I typically respond to messages within 24 hours during weekdays. For urgent matters, feel free to
+                    I typically respond to messages within 48 hours during weekdays. For urgent matters, feel free to
                     reach out via LinkedIn or Twitter.
                   </p>
                 </div>

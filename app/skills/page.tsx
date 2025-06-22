@@ -38,31 +38,29 @@ export default function SkillsPage() {
 
   // Cybersecurity Tools with representative logos/icons
   const cyberSecTech = [
-    { name: "Kali Linux", logo: "https://raw.githubusercontent.com/canaleal/devicon/new-icon--kali-linux/icons/kalilinux/kalilinux-original.svg", color: "#557C94" },
-    { name: "Metasploit", logo: "https://www.kali.org/tools/metasploit-framework/images/metasploit-framework-logo.svg", color: "#2596BE", fallback: "🚀" },
-    { name: "Burp Suite", logo: "https://portswigger.net/content/images/logos/burp-suite-logo.svg", color: "#FF6633", fallback: "🔧" },
-    { name: "Nmap", logo: "https://nmap.org/images/nmap-logo-256x256.png", color: "#0E4B99", fallback: "🔍" },
-    { name: "Wireshark", logo: "https://www.wireshark.org/assets/theme-2015/images/wireshark_logo.png", color: "#1679A7", fallback: "🦈" },
-    { name: "OWASP ZAP", logo: "https://raw.githubusercontent.com/zaproxy/zaproxy/main/zap/src/main/resources/resource/zap1024x1024.png", color: "#00549E", fallback: "⚡" },
-    { name: "Nessus", logo: "https://static-www.elastic.co/v3/assets/bltefdd0b53ddbbfdbf/blt36f2da8d650732a0/5d0823c3d8ff351753cbc99f/nessus-logo-color-100x100.png", color: "#00C176", fallback: "🛡️" },
-    { name: "Aircrack-ng", logo: "https://www.aircrack-ng.org/doku.php?id=aircrack-ng", color: "#FF6B35", fallback: "📡" },
-    { name: "John the Ripper", logo: "https://www.openwall.com/john/", color: "#8B0000", fallback: "🔐" },
-    { name: "Hashcat", logo: "https://hashcat.net/", color: "#FF4444", fallback: "🔓" },
-    { name: "Netcat", logo: "https://nmap.org/", color: "#4A90E2", fallback: "🐱" },
-    { name: "Hydra", logo: "https://github.com/vanhauser-thc/thc-hydra", color: "#FF3366", fallback: "🌊" },
-    { name: "Nikto", logo: "https://cirt.net/nikto2", color: "#9B59B6", fallback: "🔎" },
-    { name: "SQLmap", logo: "http://sqlmap.org/", color: "#E74C3C", fallback: "💉" },
-    { name: "Maltego", logo: "https://www.maltego.com/", color: "#1ABC9C", fallback: "🕸️" },
-    { name: "Shodan", logo: "https://www.shodan.io/", color: "#C0392B", fallback: "👁️" }
+    { name: "Kali Linux", logo: "https://fbi.cults3d.com/uploaders/13889723/illustration-file/88f914f9-4ec0-4d0c-8ebb-5edc51f4b3cd/kali_linux.jpg", color: "#557C94" },
+    { name: "Metasploit", logo: "https://www.kali.org/tools/metasploit-framework/images/metasploit-framework-logo.svg", color: "#2596BE"},
+    { name: "Burp Suite", logo: "https://www.kali.org/tools/burpsuite/images/burpsuite-logo.svg", color: "#FF6633"},
+    { name: "Nmap", logo: "https://www.kali.org/tools/nmap/images/nmap-logo.svg", color: "#0E4B99"},
+    { name: "Wireshark", logo: "https://www.kali.org/tools/wireshark/images/wireshark-logo.svg", color: "#00549E"},
+    { name: "Nessus", logo: "https://tryhackme-images.s3.amazonaws.com/room-icons/2fc9d2bc41c0ad97d655ed460ea44fca.png", color: "#00C176"},
+    { name: "Aircrack-ng", logo: "https://www.kali.org/tools/aircrack-ng/images/aircrack-ng-logo.svg", color: "#FF6B35"},
+    { name: "John the Ripper", logo: "https://www.kali.org/tools/john/images/john-logo.svg", color: "#8B0000"},
+    { name: "Hashcat", logo: "https://www.kali.org/tools/hashcat/images/hashcat-logo.svg", color: "#FF4444"},
+    { name: "Netcat", logo: "https://www.kali.org/tools/netcat/images/netcat-logo.svg", color: "#4A90E2"},
+    { name: "Hydra", logo: "https://www.kali.org/tools/hydra/images/hydra-logo.svg", color: "#FF3366"},
+    { name: "Nikto", logo: "https://www.kali.org/tools/nikto/images/nikto-logo.svg", color: "#9B59B6"},
+    { name: "SQLmap", logo: "https://www.kali.org/tools/sqlmap/images/sqlmap-logo.svg", color: "#E74C3C"},
+    { name: "Maltego", logo: "https://www.kali.org/tools/maltego/images/maltego-logo.svg", color: "#1ABC9C" },
+    { name: "Shodan", logo: "https://pbs.twimg.com/profile_images/1105606704090267648/oyZUgnFr_400x400.png", color: "#C0392B"}
   ]
 
-  // For cybersecurity tools, we'll use text-based logos since many don't have public SVG logos
   const cyberSecDisplay = cyberSecTech.map(tech => ({
     ...tech,
     displayIcon: tech.fallback || tech.name.charAt(0)
   }))
 
-  // Create seamless loops with 3 copies for smoother transition
+  // Create seamless loops 
   const fullStackLoop = [...fullStackTech, ...fullStackTech, ...fullStackTech]
   const cyberSecLoop = [...cyberSecDisplay, ...cyberSecDisplay, ...cyberSecDisplay]
 
