@@ -100,7 +100,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold mb-4">Professional Overview</h2>
               <p className="text-lg leading-relaxed text-muted-foreground mb-6">
                 Computer Science student at Africa Nazarene University with a strong focus on cybersecurity 
-                and full-stack development. Winner of the 2024 NASA Space Apps Hackathon (Kenya) as part of a team that developed an innovative space orrery system..
+                and full-stack development. Winner of the 2024 NASA Space Apps Hackathon (Kenya) as part of a team that developed an innovative space orrery system.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
                 Experienced in penetration testing, CTF competitions, and building production-ready applications 
