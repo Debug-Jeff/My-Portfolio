@@ -2,6 +2,8 @@
 
 A modern, interactive portfolio website showcasing cybersecurity expertise, full-stack development skills, and community contributions. Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
+[/home.png](Portfolio-Screenshot)
+
 ## 🚀 Features
 
 ### Core Features

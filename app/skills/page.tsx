@@ -16,53 +16,48 @@ export default function SkillsPage() {
     setIsVisible(true)
   }, [])
 
-  // Full-Stack Technologies with real logo URLs
+  // Full-Stack Technologies
   const fullStackTech = [
-    { name: "React", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg", color: "#61DAFB" },
-    { name: "Next.js", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg", color: "#000000" },
-    { name: "JavaScript", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg", color: "#F7DF1E" },
-    { name: "TypeScript", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg", color: "#3178C6" },
-    { name: "Python", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg", color: "#3776AB" },
-    { name: "Node.js", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg", color: "#339933" },
-    { name: "Express", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg", color: "#000000" },
-    { name: "Django", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg", color: "#092E20" },
-    { name: "MongoDB", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg", color: "#47A248" },
-    { name: "PostgreSQL", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg", color: "#336791" },
-    { name: "MySQL", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg", color: "#4479A1" },
-    { name: "Docker", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg", color: "#2496ED" },
-    { name: "Git", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg", color: "#F05032" },
-    { name: "Tailwind", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-plain.svg", color: "#06B6D4" },
-    { name: "HTML5", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg", color: "#E34F26" },
-    { name: "CSS3", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg", color: "#1572B6" }
+    { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", color: "#61DAFB" },
+    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", color: "#000000" },
+    { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", color: "#F7DF1E" },
+    { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", color: "#3178C6" },
+    { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", color: "#3776AB" },
+    { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", color: "#339933" },
+    { name: "Express", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", color: "#000000" },
+    { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg", color: "#092E20" },
+    { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", color: "#47A248" },
+    { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", color: "#336791" },
+    { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", color: "#4479A1" },
+    { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", color: "#2496ED" },
+    { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", color: "#F05032" },
+    { name: "Tailwind", logo: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg", color: "#06B6D4" },
+    { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", color: "#E34F26" },
+    { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", color: "#1572B6" }
   ]
 
-  // Cybersecurity Tools with representative logos/icons
+  // Cybersecurity Tools
   const cyberSecTech = [
-    { name: "Kali Linux", logo: "https://fbi.cults3d.com/uploaders/13889723/illustration-file/88f914f9-4ec0-4d0c-8ebb-5edc51f4b3cd/kali_linux.jpg", color: "#557C94" },
-    { name: "Metasploit", logo: "https://www.kali.org/tools/metasploit-framework/images/metasploit-framework-logo.svg", color: "#2596BE"},
-    { name: "Burp Suite", logo: "https://www.kali.org/tools/burpsuite/images/burpsuite-logo.svg", color: "#FF6633"},
-    { name: "Nmap", logo: "https://www.kali.org/tools/nmap/images/nmap-logo.svg", color: "#0E4B99"},
-    { name: "Wireshark", logo: "https://www.kali.org/tools/wireshark/images/wireshark-logo.svg", color: "#00549E"},
-    { name: "Nessus", logo: "https://tryhackme-images.s3.amazonaws.com/room-icons/2fc9d2bc41c0ad97d655ed460ea44fca.png", color: "#00C176"},
-    { name: "Aircrack-ng", logo: "https://www.kali.org/tools/aircrack-ng/images/aircrack-ng-logo.svg", color: "#FF6B35"},
-    { name: "John the Ripper", logo: "https://www.kali.org/tools/john/images/john-logo.svg", color: "#8B0000"},
-    { name: "Hashcat", logo: "https://www.kali.org/tools/hashcat/images/hashcat-logo.svg", color: "#FF4444"},
-    { name: "Netcat", logo: "https://www.kali.org/tools/netcat/images/netcat-logo.svg", color: "#4A90E2"},
-    { name: "Hydra", logo: "https://www.kali.org/tools/hydra/images/hydra-logo.svg", color: "#FF3366"},
-    { name: "Nikto", logo: "https://www.kali.org/tools/nikto/images/nikto-logo.svg", color: "#9B59B6"},
-    { name: "SQLmap", logo: "https://www.kali.org/tools/sqlmap/images/sqlmap-logo.svg", color: "#E74C3C"},
-    { name: "Maltego", logo: "https://www.kali.org/tools/maltego/images/maltego-logo.svg", color: "#1ABC9C" },
-    { name: "Shodan", logo: "https://pbs.twimg.com/profile_images/1105606704090267648/oyZUgnFr_400x400.png", color: "#C0392B"}
+    { name: "Kali Linux", logo: "https://www.kali.org/images/kali-logo.svg", color: "#557C94" },
+    { name: "Metasploit", logo: "https://www.vectorlogo.zone/logos/metasploit/metasploit-icon.svg", color: "#2596BE"},
+    { name: "Burp Suite", logo: "https://portswigger.net/content/images/logos/burp-suite-logo.svg", color: "#FF6633"},
+    { name: "Nmap", logo: "https://nmap.org/images/nmap-logo-256x256.png", color: "#0E4B99"},
+    { name: "Wireshark", logo: "https://www.vectorlogo.zone/logos/wireshark/wireshark-icon.svg", color: "#00549E"},
+    { name: "Nessus", logo: "https://www.tenable.com/sites/drupal.dmz.tenablesecurity.com/files/images/brand-assets/Nessus_Logo_FullColor.svg", color: "#00C176"},
+    { name: "Aircrack-ng", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Aircrack-ng-new-logo.svg/512px-Aircrack-ng-new-logo.svg.png", color: "#FF6B35"},
+    { name: "John the Ripper", logo: "https://www.openwall.com/john/g/john-the-ripper.png", color: "#8B0000"},
+    { name: "Hashcat", logo: "https://hashcat.net/misc/example_hashes/hashcat.png", color: "#FF4444"},
+    { name: "Netcat", logo: "https://nmap.org/ncat/images/ncat-logo-64.png", color: "#4A90E2"},
+    { name: "Hydra", logo: "https://tools.kali.org/wp-content/uploads/2014/02/hydra-logo.png", color: "#FF3366"},
+    { name: "Nikto", logo: "https://cirt.net/nikto2-docs/nikto.png", color: "#9B59B6"},
+    { name: "SQLmap", logo: "https://sqlmap.org/images/sqlmap-logo.png", color: "#E74C3C"},
+    { name: "Maltego", logo: "https://www.maltego.com/images/uploads/maltego-logo.svg", color: "#1ABC9C" },
+    { name: "Shodan", logo: "https://help.shodan.io/static/img/shodan-logo-red.png", color: "#C0392B"}
   ]
-
-  const cyberSecDisplay = cyberSecTech.map(tech => ({
-    ...tech,
-    displayIcon: tech.fallback || tech.name.charAt(0)
-  }))
 
   // Create seamless loops 
   const fullStackLoop = [...fullStackTech, ...fullStackTech, ...fullStackTech]
-  const cyberSecLoop = [...cyberSecDisplay, ...cyberSecDisplay, ...cyberSecDisplay]
+  const cyberSecLoop = [...cyberSecTech, ...cyberSecTech, ...cyberSecTech]
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -100,7 +95,6 @@ export default function SkillsPage() {
           
           {/* Clean Carousel with Fog Effect */}
           <div className="relative py-8">
-            {/* Carousel Container with extra padding for hover scaling */}
             <div className="overflow-hidden relative">
               <motion.div
                 ref={fullStackCarouselRef}
@@ -126,24 +120,6 @@ export default function SkillsPage() {
                       scale: 1.1,
                       zIndex: 10,
                       transition: { type: "spring", stiffness: 300 }
-                    }}
-                    onMouseEnter={() => {
-                      // Only handle mouse events on non-touch devices
-                      if (!('ontouchstart' in window)) {
-                        const carousel = fullStackCarouselRef.current
-                        if (carousel) {
-                          carousel.style.animationPlayState = 'paused'
-                        }
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      // Only handle mouse events on non-touch devices
-                      if (!('ontouchstart' in window)) {
-                        const carousel = fullStackCarouselRef.current
-                        if (carousel) {
-                          carousel.style.animationPlayState = 'running'
-                        }
-                      }
                     }}
                   >
                     <div className="w-16 h-16 mx-auto mb-4 relative">
@@ -200,19 +176,18 @@ export default function SkillsPage() {
           
           {/* Clean Carousel with Fog Effect - Moving Right to Left */}
           <div className="relative py-8">
-            {/* Carousel Container with extra padding for hover scaling */}
             <div className="overflow-hidden relative">
               <motion.div
                 ref={cyberCarouselRef}
                 className="flex space-x-16 py-4"
                 animate={{
-                  x: [-160 * cyberSecDisplay.length * 2, -160 * cyberSecDisplay.length]
+                  x: [-160 * cyberSecTech.length * 2, -160 * cyberSecTech.length]
                 }}
                 transition={{
                   x: {
                     repeat: Infinity,
                     repeatType: "loop",
-                    duration: cyberSecDisplay.length * 2.5,
+                    duration: cyberSecTech.length * 2.5,
                     ease: "linear",
                   },
                 }}
@@ -227,33 +202,29 @@ export default function SkillsPage() {
                       zIndex: 10,
                       transition: { type: "spring", stiffness: 300 }
                     }}
-                    onMouseEnter={() => {
-                      // Only handle mouse events on non-touch devices
-                      if (!('ontouchstart' in window)) {
-                        const carousel = cyberCarouselRef.current
-                        if (carousel) {
-                          carousel.style.animationPlayState = 'paused'
-                        }
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      // Only handle mouse events on non-touch devices
-                      if (!('ontouchstart' in window)) {
-                        const carousel = cyberCarouselRef.current
-                        if (carousel) {
-                          carousel.style.animationPlayState = 'running'
-                        }
-                      }
-                    }}
                   >
-                    <div 
-                      className="w-16 h-16 mx-auto mb-4 rounded-lg flex items-center justify-center text-3xl font-bold transition-all duration-300 grayscale group-hover:grayscale-0"
-                      style={{
-                        backgroundColor: tech.color + '20',
-                        color: tech.color,
-                      }}
-                    >
-                      {tech.displayIcon}
+                    <div className="w-16 h-16 mx-auto mb-4 relative">
+                      <Image
+                        src={tech.logo}
+                        alt={`${tech.name} logo`}
+                        width={64}
+                        height={64}
+                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        onError={(e) => {
+                          // Fallback to styled text if image fails to load
+                          e.currentTarget.style.display = 'none'
+                          const fallbackDiv = e.currentTarget.nextElementSibling
+                          if (fallbackDiv) {
+                            fallbackDiv.style.display = 'flex'
+                          }
+                        }}
+                      />
+                      <div 
+                        className="absolute inset-0 hidden items-center justify-center text-2xl font-bold rounded-lg grayscale group-hover:grayscale-0"
+                        style={{ backgroundColor: tech.color + '20', color: tech.color }}
+                      >
+                        {tech.name.charAt(0)}
+                      </div>
                     </div>
                     <h3 className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {tech.name}
