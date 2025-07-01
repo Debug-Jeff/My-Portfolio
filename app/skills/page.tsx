@@ -33,31 +33,178 @@ export default function SkillsPage() {
     { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", color: "#F05032" },
     { name: "Tailwind", logo: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg", color: "#06B6D4" },
     { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", color: "#E34F26" },
-    { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", color: "#1572B6" }
+    { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", color: "#1572B6" },
+    { name: "Vue.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", color: "#4FC08D" },
+    { name: "Angular", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg", color: "#DD0031" },
+    { name: "GraphQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg", color: "#E10098" },
+    { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg", color: "#DC382D" },
+    { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", color: "#FF9900" },
+    { name: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", color: "#FFCA28" }
   ]
 
-  // Cybersecurity Tools
+  // Cybersecurity Tools with fallback icons
   const cyberSecTech = [
-    { name: "Kali Linux", logo: "https://www.kali.org/images/kali-logo.svg", color: "#557C94" },
-    { name: "Metasploit", logo: "https://www.vectorlogo.zone/logos/metasploit/metasploit-icon.svg", color: "#2596BE"},
-    { name: "Burp Suite", logo: "https://portswigger.net/content/images/logos/burp-suite-logo.svg", color: "#FF6633"},
-    { name: "Nmap", logo: "https://nmap.org/images/nmap-logo-256x256.png", color: "#0E4B99"},
-    { name: "Wireshark", logo: "https://www.vectorlogo.zone/logos/wireshark/wireshark-icon.svg", color: "#00549E"},
-    { name: "Nessus", logo: "https://www.tenable.com/sites/drupal.dmz.tenablesecurity.com/files/images/brand-assets/Nessus_Logo_FullColor.svg", color: "#00C176"},
-    { name: "Aircrack-ng", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Aircrack-ng-new-logo.svg/512px-Aircrack-ng-new-logo.svg.png", color: "#FF6B35"},
-    { name: "John the Ripper", logo: "https://www.openwall.com/john/g/john-the-ripper.png", color: "#8B0000"},
-    { name: "Hashcat", logo: "https://hashcat.net/misc/example_hashes/hashcat.png", color: "#FF4444"},
-    { name: "Netcat", logo: "https://nmap.org/ncat/images/ncat-logo-64.png", color: "#4A90E2"},
-    { name: "Hydra", logo: "https://tools.kali.org/wp-content/uploads/2014/02/hydra-logo.png", color: "#FF3366"},
-    { name: "Nikto", logo: "https://cirt.net/nikto2-docs/nikto.png", color: "#9B59B6"},
-    { name: "SQLmap", logo: "https://sqlmap.org/images/sqlmap-logo.png", color: "#E74C3C"},
-    { name: "Maltego", logo: "https://www.maltego.com/images/uploads/maltego-logo.svg", color: "#1ABC9C" },
-    { name: "Shodan", logo: "https://help.shodan.io/static/img/shodan-logo-red.png", color: "#C0392B"}
+    { 
+      name: "Kali Linux", 
+      logo: "https://www.kali.org/images/kali-logo.svg", 
+      fallback: "🐧",
+      color: "#557C94" 
+    },
+    { 
+      name: "Metasploit", 
+      logo: "https://www.metasploit.com/includes/images/metasploit-logo.svg", 
+      fallback: "🎯",
+      color: "#2596BE"
+    },
+    { 
+      name: "Burp Suite", 
+      logo: "https://portswigger.net/content/images/logos/burp-suite-logo.svg", 
+      fallback: "🔍",
+      color: "#FF6633"
+    },
+    { 
+      name: "Nmap", 
+      logo: "https://nmap.org/images/nmap-logo-256x256.png", 
+      fallback: "🗺️",
+      color: "#0E4B99"
+    },
+    { 
+      name: "Wireshark", 
+      logo: "https://www.wireshark.org/assets/theme-2015/images/wireshark_logo.png", 
+      fallback: "🦈",
+      color: "#00549E"
+    },
+    { 
+      name: "Nessus", 
+      logo: "https://www.tenable.com/sites/drupal.dmz.tenablesecurity.com/files/images/brand-assets/Nessus_Logo_FullColor.svg", 
+      fallback: "🛡️",
+      color: "#00C176"
+    },
+    { 
+      name: "Aircrack-ng", 
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Aircrack-ng-new-logo.svg/512px-Aircrack-ng-new-logo.svg.png", 
+      fallback: "📡",
+      color: "#FF6B35"
+    },
+    { 
+      name: "John the Ripper", 
+      logo: "https://www.openwall.com/john/g/john-the-ripper.png", 
+      fallback: "🔓",
+      color: "#8B0000"
+    },
+    { 
+      name: "Hashcat", 
+      logo: "https://hashcat.net/misc/example_hashes/hashcat.png", 
+      fallback: "🔐",
+      color: "#FF4444"
+    },
+    { 
+      name: "Netcat", 
+      logo: "https://nmap.org/ncat/images/ncat-logo-64.png", 
+      fallback: "🐱",
+      color: "#4A90E2"
+    },
+    { 
+      name: "Hydra", 
+      logo: "https://tools.kali.org/wp-content/uploads/2014/02/hydra-logo.png", 
+      fallback: "🐙",
+      color: "#FF3366"
+    },
+    { 
+      name: "Nikto", 
+      logo: "https://cirt.net/nikto2-docs/nikto.png", 
+      fallback: "🔎",
+      color: "#9B59B6"
+    },
+    { 
+      name: "SQLmap", 
+      logo: "https://sqlmap.org/images/sqlmap-logo.png", 
+      fallback: "💉",
+      color: "#E74C3C"
+    },
+    { 
+      name: "Maltego", 
+      logo: "https://www.maltego.com/images/uploads/maltego-logo.svg", 
+      fallback: "🕸️",
+      color: "#1ABC9C" 
+    },
+    { 
+      name: "Shodan", 
+      logo: "https://help.shodan.io/static/img/shodan-logo-red.png", 
+      fallback: "👁️",
+      color: "#C0392B"
+    },
+    { 
+      name: "OWASP ZAP", 
+      logo: "https://www.zaproxy.org/img/zap256x256.png", 
+      fallback: "⚡",
+      color: "#00549E"
+    },
+    { 
+      name: "Gobuster", 
+      logo: "", 
+      fallback: "🔍",
+      color: "#FF6B35"
+    },
+    { 
+      name: "Dirb", 
+      logo: "", 
+      fallback: "📁",
+      color: "#8B0000"
+    },
+    { 
+      name: "Ffuf", 
+      logo: "", 
+      fallback: "🚀",
+      color: "#FF4444"
+    },
+    { 
+      name: "Nuclei", 
+      logo: "", 
+      fallback: "⚛️",
+      color: "#4A90E2"
+    }
   ]
 
   // Create seamless loops 
   const fullStackLoop = [...fullStackTech, ...fullStackTech, ...fullStackTech]
   const cyberSecLoop = [...cyberSecTech, ...cyberSecTech, ...cyberSecTech]
+
+  // Component for handling image loading with fallback
+  const SkillIcon = ({ skill, size = 64 }) => {
+    const [imageError, setImageError] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(false)
+
+    return (
+      <div className="w-16 h-16 mx-auto mb-4 relative flex items-center justify-center">
+        {!imageError && skill.logo ? (
+          <Image
+            src={skill.logo}
+            alt={`${skill.name} logo`}
+            width={size}
+            height={size}
+            className={`object-contain grayscale group-hover:grayscale-0 transition-all duration-300 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageError(true)}
+            loading="lazy"
+          />
+        ) : null}
+        
+        {(imageError || !skill.logo || !imageLoaded) && (
+          <div 
+            className={`absolute inset-0 flex items-center justify-center text-2xl font-bold rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300 ${
+              imageLoaded && !imageError ? 'opacity-0' : 'opacity-100'
+            }`}
+            style={{ backgroundColor: skill.color + '20', color: skill.color }}
+          >
+            {skill.fallback || skill.name.charAt(0)}
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -122,29 +269,7 @@ export default function SkillsPage() {
                       transition: { type: "spring", stiffness: 300 }
                     }}
                   >
-                    <div className="w-16 h-16 mx-auto mb-4 relative">
-                      <Image
-                        src={tech.logo}
-                        alt={`${tech.name} logo`}
-                        width={64}
-                        height={64}
-                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                        onError={(e) => {
-                          // Fallback to styled text if image fails to load
-                          e.currentTarget.style.display = 'none'
-                          const fallbackDiv = e.currentTarget.nextElementSibling
-                          if (fallbackDiv) {
-                            fallbackDiv.style.display = 'flex'
-                          }
-                        }}
-                      />
-                      <div 
-                        className="absolute inset-0 hidden items-center justify-center text-2xl font-bold rounded-lg grayscale group-hover:grayscale-0"
-                        style={{ backgroundColor: tech.color + '20', color: tech.color }}
-                      >
-                        {tech.name.charAt(0)}
-                      </div>
-                    </div>
+                    <SkillIcon skill={tech} />
                     <h3 className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {tech.name}
                     </h3>
@@ -203,29 +328,7 @@ export default function SkillsPage() {
                       transition: { type: "spring", stiffness: 300 }
                     }}
                   >
-                    <div className="w-16 h-16 mx-auto mb-4 relative">
-                      <Image
-                        src={tech.logo}
-                        alt={`${tech.name} logo`}
-                        width={64}
-                        height={64}
-                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                        onError={(e) => {
-                          // Fallback to styled text if image fails to load
-                          e.currentTarget.style.display = 'none'
-                          const fallbackDiv = e.currentTarget.nextElementSibling
-                          if (fallbackDiv) {
-                            fallbackDiv.style.display = 'flex'
-                          }
-                        }}
-                      />
-                      <div 
-                        className="absolute inset-0 hidden items-center justify-center text-2xl font-bold rounded-lg grayscale group-hover:grayscale-0"
-                        style={{ backgroundColor: tech.color + '20', color: tech.color }}
-                      >
-                        {tech.name.charAt(0)}
-                      </div>
-                    </div>
+                    <SkillIcon skill={tech} />
                     <h3 className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {tech.name}
                     </h3>

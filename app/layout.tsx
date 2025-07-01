@@ -1,5 +1,3 @@
-// "use client"
-
 import type React from "react"
 import type { Metadata, Viewport } from "next/types"
 import { Inter } from "next/font/google"
@@ -9,18 +7,23 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Suspense } from "react"
 
-// Dynamically import non-critical components
-const CustomCursor = dynamic(() => import("@/components/custom-cursor"))
-// const CommandPalette = dynamic(() => import("@/components/command-palette"))
-// const NotificationSystem = dynamic(() => import("@/components/notification-system"))
-// const EasterEggs = dynamic(() => import("@/components/easter-eggs"))
-// const AnalyticsProvider = dynamic(() => import("@/components/analytics-provider"))
-// const PWAProvider = dynamic(() => import("@/components/pwa-provider"))
-// const HackThePortfolio = dynamic(() => import("@/components/hack-the-portfolio"))
-const InteractiveBackground = dynamic(() => import("@/components/interactive-background"))
-const LoadingScreen = dynamic(() => import("@/components/loading-screen"))
+// Dynamically import non-critical components for better performance
+const CustomCursor = dynamic(() => import("@/components/custom-cursor"), {
+  ssr: false
+})
+const InteractiveBackground = dynamic(() => import("@/components/interactive-background"), {
+  ssr: false
+})
+const LoadingScreen = dynamic(() => import("@/components/loading-screen"), {
+  ssr: false
+})
 
-const inter = Inter({ subsets: ["latin"], display: "swap" })
+const inter = Inter({ 
+  subsets: ["latin"], 
+  display: "swap",
+  preload: true,
+  fallback: ['system-ui', 'arial']
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://the-odessy-portfolio.netlify.app"),
@@ -84,7 +87,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export const viewport: Viewport = {
@@ -104,23 +107,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+        <link rel="dns-prefetch" href="https://www.vectorlogo.zone" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Suspense fallback={null}>
-          </Suspense>
-
-          <Suspense fallback={null}>
-            {/* <NotificationSystem />
-            <CommandPalette /> */}
             <Toaster />
           </Suspense>
 
           <Suspense fallback={null}>
             <CustomCursor />
             <InteractiveBackground />
-            {/* <EasterEggs />
-            <HackThePortfolio /> */}
           </Suspense>
 
           <Suspense fallback={<LoadingScreen />}>

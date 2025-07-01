@@ -1,9 +1,14 @@
 "use client"
 
-import { memo } from "react"
-import Image from "next/image"
+import { memo, useState, Suspense } from "react"
+import dynamic from "next/dynamic"
 import { ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
+// Lazy load Image component for better performance
+const Image = dynamic(() => import("next/image"), {
+  loading: () => <div className="w-full h-48 bg-muted animate-pulse rounded-t-lg" />
+})
 
 interface Project {
   id: number
@@ -23,6 +28,9 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ project, onClick, viewMode }: ProjectCardProps) {
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageError, setImageError] = useState(false)
+
   if (viewMode === "list") {
     return (
       <div
@@ -31,14 +39,25 @@ function ProjectCard({ project, onClick, viewMode }: ProjectCardProps) {
       >
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3 relative h-48 md:h-auto">
-            <Image
-              src={project.image || "/image-1.jpg"}
-              alt={project.title}
-              fill
-              className="object-cover"
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
+            <Suspense fallback={<div className="w-full h-full bg-muted animate-pulse" />}>
+              <Image
+                src={project.image || "/image-1.jpg"}
+                alt={project.title}
+                fill
+                className={`object-cover transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => setImageError(true)}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </Suspense>
+            {imageError && (
+              <div className="absolute inset-0 bg-muted flex items-center justify-center">
+                <span className="text-muted-foreground">Image unavailable</span>
+              </div>
+            )}
           </div>
           <div className="md:w-2/3 p-6">
             <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
@@ -88,14 +107,25 @@ function ProjectCard({ project, onClick, viewMode }: ProjectCardProps) {
       onClick={onClick}
     >
       <div className="relative h-48 overflow-hidden">
-        <Image
-          src={project.image || "/image-1.jpg"}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+        <Suspense fallback={<div className="w-full h-full bg-muted animate-pulse" />}>
+          <Image
+            src={project.image || "/image-1.jpg"}
+            alt={project.title}
+            fill
+            className={`object-cover transition-all duration-300 group-hover:scale-110 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageError(true)}
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </Suspense>
+        {imageError && (
+          <div className="absolute inset-0 bg-muted flex items-center justify-center">
+            <span className="text-muted-foreground">Image unavailable</span>
+          </div>
+        )}
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-2">{project.title}</h3>

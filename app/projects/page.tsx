@@ -6,11 +6,22 @@ import { LayoutGrid, List } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useInView } from "react-intersection-observer"
 
-const Navbar = dynamic(() => import("@/components/navbar"))
-const Footer = dynamic(() => import("@/components/footer"))
-const ProjectCard = dynamic(() => import("@/components/project-card"))
-const TypewriterEffect = dynamic(() => import("@/components/typewriter-effect"))
-const ProjectModal = dynamic(() => import("@/components/project-modal"))
+// Lazy load components for better performance
+const Navbar = dynamic(() => import("@/components/navbar"), {
+  loading: () => <div className="h-16 bg-background border-b animate-pulse" />
+})
+const Footer = dynamic(() => import("@/components/footer"), {
+  loading: () => <div className="h-32 bg-background border-t animate-pulse" />
+})
+const ProjectCard = dynamic(() => import("@/components/project-card"), {
+  loading: () => <div className="bg-card border rounded-lg h-64 animate-pulse" />
+})
+const TypewriterEffect = dynamic(() => import("@/components/typewriter-effect"), {
+  loading: () => <div className="h-12 bg-muted animate-pulse rounded" />
+})
+const ProjectModal = dynamic(() => import("@/components/project-modal"), {
+  ssr: false
+})
 
 interface Project {
   id: number
@@ -137,26 +148,20 @@ export default function ProjectsPage() {
       details:
         "A weather dashboard that provides real-time weather information, forecasting, and historical data. The application uses the OpenWeather API to fetch weather data and Chart.js to visualize temperature, humidity, and precipitation trends.",
     },
-    // {
-    //   id: 10,
-    //   title: "Task Manager",
-    //   description: "Collaborative task management application with real-time updates.",
-    //   image: "/image-1.jpg?height=400&width=600",
-    //   stack: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS"],
-    //   github: "https://github.com/jeffmutugi/task-manager",
-    //   demo: "https://task-manager-jeff.vercel.app",
-    //   details:
-    //     "A collaborative task management application with real-time updates. The application allows users to create, assign, and track tasks. Features include task categorization, due dates, priority levels, and team collaboration.",
-    // },
   ], [])
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <Suspense fallback={<div className="h-16 bg-background border-b animate-pulse" />}>
+        <Navbar />
+      </Suspense>
+      
       <main className="container mx-auto px-4 pt-20 pb-8">
         <div className="flex flex-col items-center justify-center space-y-4 mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">
-            <TypewriterEffect text="My Projects" />
+            <Suspense fallback={<span>My Projects</span>}>
+              <TypewriterEffect text="My Projects" />
+            </Suspense>
           </h1>
           <p className="text-muted-foreground text-center max-w-2xl">
             Here are some of my notable projects. Each one represents a unique challenge and learning experience.
@@ -166,6 +171,7 @@ export default function ProjectsPage() {
               variant={viewMode === "grid" ? "default" : "outline"}
               size="icon"
               onClick={() => setViewMode("grid")}
+              aria-label="Grid view"
             >
               <LayoutGrid className="h-4 w-4" />
             </Button>
@@ -173,6 +179,7 @@ export default function ProjectsPage() {
               variant={viewMode === "list" ? "default" : "outline"}
               size="icon"
               onClick={() => setViewMode("list")}
+              aria-label="List view"
             >
               <List className="h-4 w-4" />
             </Button>
@@ -189,25 +196,31 @@ export default function ProjectsPage() {
               className={`transform transition-all duration-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}
               style={{ transitionDelay: `${project.id * 100}ms` }}
             >
-              <ProjectCard
-                project={project}
-                viewMode={viewMode}
-                onClick={() => setSelectedProject(project)}
-              />
+              <Suspense fallback={<div className="bg-card border rounded-lg h-64 animate-pulse" />}>
+                <ProjectCard
+                  project={project}
+                  viewMode={viewMode}
+                  onClick={() => setSelectedProject(project)}
+                />
+              </Suspense>
             </div>
           ))}
         </div>
       </main>
 
       {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          isOpen={!!selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
+        <Suspense fallback={null}>
+          <ProjectModal
+            project={selectedProject}
+            isOpen={!!selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        </Suspense>
       )}
 
-      <Footer />
+      <Suspense fallback={<div className="h-32 bg-background border-t animate-pulse" />}>
+        <Footer />
+      </Suspense>
     </div>
   )
 }
